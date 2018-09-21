@@ -3,6 +3,7 @@ package com.example.jamesluo.donationtracker;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -86,7 +87,12 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                boolean result = attemptLogin();
+                if (result) {
+                    Intent in = new Intent(Login.this,LoginSuccess.class);
+                    Login.this.startActivity(in);
+
+                }
             }
         });
 
@@ -143,9 +149,9 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    private boolean attemptLogin() {
         if (mAuthTask != null) {
-            return;
+            return false;
         }
 
         // Reset errors.
@@ -188,6 +194,9 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
         }
+        if (cancel) return false;
+        return Model.verify(email, password);
+
     }
 
     private boolean isEmailValid(String email) {
