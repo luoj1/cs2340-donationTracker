@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.jamesluo.donationtracker.Welcome">
+    android:paddingLeft="125dp"
+    android:paddingRight="16dp"
+    android:paddingTop="150dp"
+    android:orientation="vertical" >
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/login"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:paddingTop="15dp"
+        android:text="login" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:paddingTop="15dp"
+        android:text="register" />
+
+</LinearLayout>
