@@ -95,6 +95,14 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
                 }
             }
         });
+        Button cancel = (Button) findViewById(R.id.cancel);
+        cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Login.this,MainActivity.class);
+                startActivity(i);
+            }
+        });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
