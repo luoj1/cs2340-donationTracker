@@ -9,7 +9,7 @@ public class Model {
     private final static String pwd = "pass";
 
     public static boolean verify(String u, String p){
-        if (u == user && p == pwd){
+        if (u.equals(user) && p.equals(pwd)){
             return true;
         }else {
             return false;
