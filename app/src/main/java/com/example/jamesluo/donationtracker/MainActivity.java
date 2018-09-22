@@ -18,13 +18,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, Login.class);
+                startActivity(i);
             }
         });
         Button register = (Button) findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, Registration.class);;
+                Intent i = new Intent(MainActivity.this, Registration.class);
+                startActivity(i);
             }
         });
     }
