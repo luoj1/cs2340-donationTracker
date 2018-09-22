@@ -6,4 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.example.jamesluo.donationtracker.Welcome">
 
+    <Button
+        android:id="@+id/register"
+        android:layout_width="126dp"
+        android:layout_height="65dp"
+        android:text="@string/action_register"
+        tools:layout_editor_absoluteX="129dp"
+        tools:layout_editor_absoluteY="194dp" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="122dp"
+        android:layout_height="58dp"
+        android:text="Log In"
+        tools:layout_editor_absoluteX="131dp"
+        tools:layout_editor_absoluteY="326dp" />
 </android.support.constraint.ConstraintLayout>
