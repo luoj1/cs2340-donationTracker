@@ -89,7 +89,6 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             @Override
             public void onClick(View view) {
                 attemptLogin();
-
             }
         });
 
