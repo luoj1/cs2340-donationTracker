@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -61,6 +62,9 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private EditText mPasswordConfirmView;
+    private EditText mNameView;
+    private Spinner mTypeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,16 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
                 return false;
             }
         });
+        mPasswordConfirmView = (EditText) findViewById(R.id.confirmpassword);
+
+        mNameView = (EditText) findViewById(R.id.name);
+
+        mTypeSpinner = (Spinner) findViewById(R.id.type);
+        //User, Location Employee or Admin
+//        ArrayAdapter<String> csAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, {"local employee", "user", "admin"});
+//        csAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        csSpinner.setAdapter(csAdapter);
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -176,7 +190,9 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
             focusView = mEmailView;
             cancel = true;
         }*/
-
+//        if (Model.contains()) {
+//            cancel = true;
+//        }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -184,6 +200,7 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
@@ -308,20 +325,7 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
 
             // TODO: register the new account here.
             return true;
