@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,9 +28,11 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -51,16 +54,21 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
+
+    public static List<String> legalUsers = Arrays.asList("User", "Location Employee", "Manager", "Admin");
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    private UserRegisterTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private EditText mPasswordConfirmView;
+    private EditText mNameView;
+    private Spinner mTypeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,20 +83,34 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptRegister();
                     return true;
                 }
                 return false;
             }
         });
+        mPasswordConfirmView = (EditText) findViewById(R.id.confirmpassword);
+
+        mNameView = (EditText) findViewById(R.id.name);
+
+        mTypeSpinner = (Spinner) findViewById(R.id.user_category);
+        //User, Location Employee or Admin
+//        ArrayAdapter<String> csAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, {"local employee", "user", "admin"});
+//        csAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        csSpinner.setAdapter(csAdapter);
+
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptRegister();
             }
         });
+
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Registration.legalUsers);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mTypeSpinner.setAdapter(adapter);
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
@@ -143,7 +165,7 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    private void attemptRegister() {
         if (mAuthTask != null) {
             return;
         }
@@ -151,10 +173,16 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mPasswordConfirmView.setError(null);
+        mNameView.setError(null);
+
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String password2 = mPasswordConfirmView.getText().toString();
+        String name = mNameView.getText().toString();
+        String type = mTypeSpinner.getSelectedItem().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -176,7 +204,25 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
             focusView = mEmailView;
             cancel = true;
         }*/
-
+//        if (Model.contains()) {
+//            cancel = true;
+//        }
+        if (TextUtils.isEmpty(name)) {
+            mNameView.setError(getString(R.string.error_field_required));
+            focusView = mNameView;
+            cancel = true;
+        }
+        if (password == password2) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordConfirmView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordConfirmView;
+            cancel = true;
+        }
+        if (Model.contains(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -184,8 +230,9 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserRegisterTask(email, password, name, type);
             mAuthTask.execute((Void) null);
         }
     }
@@ -294,34 +341,25 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserRegisterTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
         private final String mPassword;
+        private final String mNameView;
+        private final String mTypeSpinner;
 
-        UserLoginTask(String email, String password) {
+        UserRegisterTask(String email, String password, String name, String type) {
             mEmail = email;
             mPassword = password;
+            mNameView = name;
+            mTypeSpinner = type;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
+            Model.addUser(mEmail, mPassword, mNameView, mTypeSpinner);
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
 
             // TODO: register the new account here.
             return true;
@@ -344,6 +382,11 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+
+        public void onCancelPressed(View view) {
+            Log.d("Edit", "Cancel Registration");
+            finish();
         }
     }
 }
