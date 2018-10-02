@@ -193,17 +193,23 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
             focusView = mPasswordView;
             cancel = true;
         }
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mNameView;
+            cancel = true;
+        }
 
         // Check for a valid email address.
+        if (!TextUtils.isEmpty(email) && !isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        }/* else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }*/
+        }
 //        if (Model.contains()) {
 //            cancel = true;
 //        }
@@ -212,14 +218,13 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
             focusView = mNameView;
             cancel = true;
         }
-        if (password == password2) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            mPasswordConfirmView.setError(getString(R.string.error_invalid_password));
+        if (!TextUtils.equals(password, password2)) {
+            mPasswordConfirmView.setError(getString(R.string.error_incorrect_password));
             focusView = mPasswordConfirmView;
             cancel = true;
         }
         if (Model.contains(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
+            mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
         }
@@ -326,6 +331,11 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
         mEmailView.setAdapter(adapter);
     }
 
+    public void onCancelPressed(View view) {
+        Log.d("Edit", "Cancel Registration");
+        finish();
+    }
+
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -384,10 +394,6 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
             showProgress(false);
         }
 
-        public void onCancelPressed(View view) {
-            Log.d("Edit", "Cancel Registration");
-            finish();
-        }
     }
 }
 
