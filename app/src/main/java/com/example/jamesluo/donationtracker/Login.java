@@ -284,6 +284,11 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         mEmailView.setAdapter(adapter);
     }
 
+    public void onCancelPressed(View view) {
+        Log.d("Edit", "Cancel Registration");
+        finish();
+    }
+
 
     private interface ProfileQuery {
         String[] PROJECTION = {
