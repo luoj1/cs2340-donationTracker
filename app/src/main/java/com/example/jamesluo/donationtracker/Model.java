@@ -1,16 +1,27 @@
 package com.example.jamesluo.donationtracker;
 
 
+import android.app.Application;
+import android.content.res.AssetManager;
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.apache.commons.csv.*;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
-import static org.apache.commons.csv.CSVParser.parse;
-
+import org.apache.commons.csv.CSVParser;
+import com.opencsv.*;
 /**
  * Created by jamesluo on 9/20/18.
  */
@@ -21,26 +32,29 @@ public class Model {
     //type: account type
     private static HashMap<String, String> auth = new HashMap<>();
     private static HashMap<String, Info> info = new HashMap<>();
+    private static ArrayList<Location> locations = new ArrayList<>();
 
-    public static ArrayList<Location> buildLocation(String filePath) {
-    //TODO init location array
-        ArrayList<Location> locations = new ArrayList<>();
-        CSVParser data = null;
-        try{
-            data = CSVParser.parse(filePath, CSVFormat.RFC4180);
-        }catch ( java.io.IOException e){
-
-            e.printStackTrace();
-        }
-        for (CSVRecord csvRecord: data) {
-            Map<String,String> locationData = csvRecord.toMap();
-            Log.d("-----------------",  csvRecord.get("Key"));
-            int key = Integer.parseInt(locationData.get("key"));
-            Location location = new Location(locationData);
-            locations.add(key - 1,location);
-        }
+    public static List<Location> getLocations(){
         return locations;
     }
+    public static void buildLocationCSV(InputStream ins) throws FileNotFoundException, IOException {
+    //TODO init location array
+
+
+        Reader in = new InputStreamReader(ins, "UTF-8");
+
+        Iterable<CSVRecord> data = CSVFormat.DEFAULT.withHeader().parse(in);
+        int key  = 0;
+        for (CSVRecord csvRecord: data) {
+            Map<String,String> locationData = csvRecord.toMap();
+            Log.d("-----------------", locationData.keySet().toString());
+            //----key set -> [Zip, Type, State, Phone, Street Address, Website, Latitude, ﻿Key, City, Longitude, Name]
+            Location location = new Location(locationData, key);
+            locations.add(key,location);
+            key++;
+        }
+    }
+
     public static boolean verify(String u, String p){
         if (auth.containsKey(u) && auth.get(u).equals(p)){
             return true;
@@ -73,7 +87,9 @@ class Info {
 class Location {
     private Map<String, String> location;
 
-    public Location(Map<String, String> location) {this.location = location;}
+    private int key;
+
+    public Location(Map<String, String> location , int key) {this.location = location;this.key = key;}
 
     public Map<String, String> getLocation() {
         return location;
