@@ -1,8 +1,15 @@
 package com.example.jamesluo.donationtracker;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import org.apache.commons.csv.*;
+import java.io.File;
+import java.util.Map;
+
+import static org.apache.commons.csv.CSVParser.parse;
 
 /**
  * Created by jamesluo on 9/20/18.
@@ -15,6 +22,25 @@ public class Model {
     private static HashMap<String, String> auth = new HashMap<>();
     private static HashMap<String, Info> info = new HashMap<>();
 
+    public static ArrayList<Location> buildLocation(String filePath) {
+    //TODO init location array
+        ArrayList<Location> locations = new ArrayList<>();
+        CSVParser data = null;
+        try{
+            data = CSVParser.parse(filePath, CSVFormat.RFC4180);
+        }catch ( java.io.IOException e){
+
+            e.printStackTrace();
+        }
+        for (CSVRecord csvRecord: data) {
+            Map<String,String> locationData = csvRecord.toMap();
+            Log.d("-----------------",  csvRecord.get("Key"));
+            int key = Integer.parseInt(locationData.get("key"));
+            Location location = new Location(locationData);
+            locations.add(key - 1,location);
+        }
+        return locations;
+    }
     public static boolean verify(String u, String p){
         if (auth.containsKey(u) && auth.get(u).equals(p)){
             return true;
@@ -41,5 +67,19 @@ class Info {
         this.name = name;
         this.type = type;
         this.id = id;
+    }
+}
+
+class Location {
+    private Map<String, String> location;
+
+    public Location(Map<String, String> location) {this.location = location;}
+
+    public Map<String, String> getLocation() {
+        return location;
+    }
+
+    public void setLocation(Map<String, String> location) {
+        this.location = location;
     }
 }
