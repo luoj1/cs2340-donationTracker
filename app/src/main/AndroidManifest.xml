@@ -29,6 +29,12 @@
             android:name=".Registration"
             android:label="@string/title_activity_registration" />
         <activity
+            android:name=".Locations"
+            android:label="@string/title_activity_locations" />
+        <activity
+            android:name=".LocationInfo"
+            android:label="@string/title_activity_locationinfo" />
+        <activity
             android:name=".LoginSuccess"
             android:label="@string/title_activity_login_success"
             android:theme="@style/AppTheme.NoActionBar"></activity>
