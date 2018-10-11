@@ -39,8 +39,7 @@ public class Model {
     }
     public static void buildLocationCSV(InputStream ins) throws FileNotFoundException, IOException {
     //TODO init location array
-
-
+        locations = new ArrayList<>();
         Reader in = new InputStreamReader(ins, "UTF-8");
 
         Iterable<CSVRecord> data = CSVFormat.DEFAULT.withHeader().parse(in);

@@ -42,11 +42,19 @@ public class Locations extends Activity {
                 in.putExtra("Type", Model.getLocations().get(position).getLocation().get("Type"));
                 in.putExtra("Longitude", Model.getLocations().get(position).getLocation().get("Longitude"));
                 in.putExtra("Latitude", Model.getLocations().get(position).getLocation().get("Latitude"));
-                in.putExtra("Address", Model.getLocations().get(position).getLocation().get("Address"));
+                in.putExtra("Address", Model.getLocations().get(position).getLocation().get("Street Address"));
                 in.putExtra("Phone", Model.getLocations().get(position).getLocation().get("Phone"));
                 startActivity(in);
             }
-    });
+        });
+        Button back = (Button) findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Locations.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
 
