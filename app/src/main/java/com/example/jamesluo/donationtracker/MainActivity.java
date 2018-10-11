@@ -48,5 +48,13 @@ public class MainActivity extends AppCompatActivity {
         for (Location l : Model.getLocations())
             Log.d("-----------------", l.getLocation().get("Longitude"));
         //ArrayList<Location> location = Model.buildLocationXLSX("./LocationData.xlsx");
+        Button locationData = (Button) findViewById(R.id.location);
+        locationData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, Locations.class);
+                startActivity(i);
+            }
+        });
     }
 }
