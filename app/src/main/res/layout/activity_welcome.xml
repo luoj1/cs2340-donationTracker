@@ -28,4 +28,11 @@
         android:paddingTop="15dp"
         android:text="register" />
 
+    <Button
+        android:id="@+id/location"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:paddingTop="15dp"
+        android:text="location" />
+
 </LinearLayout>
