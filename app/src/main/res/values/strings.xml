@@ -21,5 +21,6 @@
     <string name="title_activity_login_success">LoginSuccess</string>
     <string name="title_activity_locations">Locations</string>
     <string name="title_activity_locationinfo">Location Details</string>
+    <string name="back">back</string>
 
 </resources>
