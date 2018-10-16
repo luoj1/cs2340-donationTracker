@@ -22,5 +22,6 @@
     <string name="title_activity_locations">Locations</string>
     <string name="title_activity_locationinfo">Location Details</string>
     <string name="back">back</string>
+    <string name="logout">logout</string>
 
 </resources>
