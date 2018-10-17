@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.HashMap;
+
 public class LoginSuccess extends AppCompatActivity {
 
     @Override
@@ -23,6 +25,11 @@ public class LoginSuccess extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        String userId = getIntent().getStringExtra("id");
+        Info info = Model.getInfo().get(userId);
+        if(info.type .equals("Location Employee")) {
+            //set add button visible
+        }
     }
 
 }

@@ -34,6 +34,9 @@ public class Model {
     private static HashMap<String, Info> info = new HashMap<>();
     private static ArrayList<Location> locations = new ArrayList<>();
 
+    public static HashMap<String, Info> getInfo(){
+        return info;
+    }
     public static List<Location> getLocations(){
         return locations;
     }
@@ -47,7 +50,7 @@ public class Model {
         for (CSVRecord csvRecord: data) {
             Map<String,String> locationData = csvRecord.toMap();
             Log.d("-----------------", locationData.keySet().toString());
-            //----key set -> [Zip, Type, State, Phone, Street Address, Website, Latitude, ﻿Key, City, Longitude, Name]
+            //----key set -> Zip, Type, State, Phone, Street Address, Website, Latitude, ﻿Key, City, Longitude, Name
             Location location = new Location(locationData, key);
             locations.add(key,location);
             key++;
@@ -65,21 +68,25 @@ public class Model {
         return auth.containsKey(u);
     }
     public static void addUser(String user, String pwd,String type, String id) {
-        auth.put(user,pwd);
-        info.put(user, new Info(user, type ,id));
+        auth.put(id,pwd);
+        info.put(id, new Info(user, type ,id));
     }
 
 
 
 }
+
 class Info {
+
     public String name;
     public String type;
     public String id;
+    public ArrayList<Location> donationLocation;
     public Info (String name, String type, String id) {
         this.name = name;
         this.type = type;
         this.id = id;
+        donationLocation = new ArrayList<Location>();
     }
 }
 
