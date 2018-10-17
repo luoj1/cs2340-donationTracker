@@ -17,15 +17,6 @@ public class LocationInfo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_info);
-        Toast.makeText(getApplicationContext(),getIntent().getStringExtra("Name")+getIntent().getStringExtra("Phone"), Toast.LENGTH_LONG).show();
-        Button back = (Button) findViewById(R.id.backToLocations);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LocationInfo.this, Locations.class);
-                startActivity(i);
-            }
-        });
         TextView location_name = (TextView) findViewById(R.id.location_name);
         TextView location_type = (TextView) findViewById(R.id.location_type);
         TextView longitude = (TextView) findViewById(R.id.longitude);

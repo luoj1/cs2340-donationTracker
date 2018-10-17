@@ -17,7 +17,7 @@ public class UserLocations extends Activity {
     //copy paste Locations.java and the xml layout for location
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.activity_userlocation);
+        //setContentView(R.layout.activity_userlocation);
 
         final ListView listview = (ListView) findViewById(R.id.listview);
         String[] values = new String[Model.getInfo().get(getIntent().getStringExtra("id")).donationLocation.size()];
@@ -34,23 +34,14 @@ public class UserLocations extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                //Toast.makeText(getBaseContext() ,Integer.toString(position) + " selected", Toast.LENGTH_LONG).show();
-                Intent in = new Intent(UserLocations.this, UserLocationInfo.class);
-                in.putExtra("Name", Model.getLocations().get(position).getLocation().get("Name"));
-                in.putExtra("Type", Model.getLocations().get(position).getLocation().get("Type"));
-                in.putExtra("Longitude", Model.getLocations().get(position).getLocation().get("Longitude"));
-                in.putExtra("Latitude", Model.getLocations().get(position).getLocation().get("Latitude"));
-                in.putExtra("Address", Model.getLocations().get(position).getLocation().get("Street Address"));
-                in.putExtra("Phone", Model.getLocations().get(position).getLocation().get("Phone"));
-                startActivity(in);
-            }
-        });
-        Button back = (Button) findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(UserLocations.this, MainActivity.class);
-                startActivity(i);
+                //Intent in = new Intent(UserLocations.this, UserLocationInfo.class);
+                //in.putExtra("Name", Model.getLocations().get(position).getLocation().get("Name"));
+                //in.putExtra("Type", Model.getLocations().get(position).getLocation().get("Type"));
+                //in.putExtra("Longitude", Model.getLocations().get(position).getLocation().get("Longitude"));
+                //in.putExtra("Latitude", Model.getLocations().get(position).getLocation().get("Latitude"));
+                //in.putExtra("Address", Model.getLocations().get(position).getLocation().get("Street Address"));
+                //in.putExtra("Phone", Model.getLocations().get(position).getLocation().get("Phone"));
+                //startActivity(in);
             }
         });
     }

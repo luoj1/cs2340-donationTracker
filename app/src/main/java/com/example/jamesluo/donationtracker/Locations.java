@@ -47,14 +47,6 @@ public class Locations extends Activity {
                 startActivity(in);
             }
         });
-        Button back = (Button) findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Locations.this, MainActivity.class);
-                startActivity(i);
-            }
-        });
     }
 
 

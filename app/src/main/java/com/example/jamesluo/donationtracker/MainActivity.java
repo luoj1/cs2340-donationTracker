@@ -36,26 +36,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-        ArrayList<Location> location = null;
-        try{
-            AssetManager aMgr= getAssets();
-            InputStream ipStream = aMgr.open("LocationData.csv");
-            Model.buildLocationCSV(ipStream);
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        for (Location l : Model.getLocations())
-            Log.d("-----------------", l.getLocation().get("Longitude"));
-        //ArrayList<Location> location = Model.buildLocationXLSX("./LocationData.xlsx");
-
-        Button locationData = (Button) findViewById(R.id.location);
-        locationData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, Locations.class);
-                startActivity(i);
-            }
-        });
     }
 }
