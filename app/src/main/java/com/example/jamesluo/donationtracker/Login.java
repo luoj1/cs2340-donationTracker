@@ -329,6 +329,8 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
             showProgress(false);
             if (success) {
                 Intent in = new Intent(Login.this,LoginSuccess.class);
+                in.putExtra("id", mEmail);
+
                 startActivity(in);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

@@ -368,7 +368,7 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            Model.addUser(mEmail, mPassword, mNameView, mTypeSpinner);
+            Model.addUser(mNameView , mPassword, mTypeSpinner, mEmail);
 
 
             // TODO: register the new account here.
