@@ -29,11 +29,6 @@ public class LoginSuccess extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        String userId = getIntent().getStringExtra("id");
-        Info info = Model.getInfo().get(userId);
-        if(info.type .equals("Location Employee")) {
-            //set add button visible
-        }
         ArrayList<Location> location = null;
         try{
             AssetManager aMgr= getAssets();
@@ -51,6 +46,7 @@ public class LoginSuccess extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LoginSuccess.this, Locations.class);
+                i.putExtra("id", getIntent().getStringExtra("id"));
                 startActivity(i);
             }
         });

@@ -33,6 +33,7 @@ public class Model {
     private static HashMap<String, String> auth = new HashMap<>();
     private static HashMap<String, Info> info = new HashMap<>();
     private static ArrayList<Location> locations = new ArrayList<>();
+    private static ArrayList<Item> items = new ArrayList<>();
 
     public static HashMap<String, Info> getInfo(){
         return info;
@@ -40,6 +41,7 @@ public class Model {
     public static List<Location> getLocations(){
         return locations;
     }
+    public static List<Item> getItems() {return items; }
     public static void buildLocationCSV(InputStream ins) throws FileNotFoundException, IOException {
     //TODO init location array
         locations = new ArrayList<>();
@@ -81,12 +83,10 @@ class Info {
     public String name;
     public String type;
     public String id;
-    public ArrayList<Location> donationLocation;
     public Info (String name, String type, String id) {
         this.name = name;
         this.type = type;
         this.id = id;
-        donationLocation = new ArrayList<Location>();
     }
 }
 
@@ -104,4 +104,36 @@ class Location {
     public void setLocation(Map<String, String> location) {
         this.location = location;
     }
+}
+
+class Item {
+    private String timeStamp;
+    private String item_location;
+    private String shortDescription;
+    private String fullDescription;
+    private String item_value;
+    private String category;
+
+    public Item(String timeStamp, String item_location, String shortDescription, String fullDescription,
+                String item_value, String category) {
+        this.timeStamp = timeStamp;
+        this.item_location = item_location;
+        this.fullDescription = fullDescription;
+        this.shortDescription = shortDescription;
+        this.item_value = item_value;
+        this.category = category;
+    }
+    public String getTimeStamp(){return this.timeStamp;}
+    public String getCategory() {return this.category;}
+    public String getFullDescription() {return this.fullDescription;}
+    public String getItem_location() {return this.item_location;}
+    public String getItem_value() {return this.item_value;}
+    public String getShortDescription() {return shortDescription;}
+
+    public void setCategory(String category) {this.category = category;}
+    public void setFullDescription(String fullDescription) {this.fullDescription = fullDescription;}
+    public void setItem_location(String item_location) {this.item_location = item_location;}
+    public void setItem_value(String item_value) {this.item_value = item_value;}
+    public void setShortDescription(String shortDescription) {this.shortDescription = shortDescription;}
+    public void setTimeStamp(String timeStamp) {this.timeStamp = timeStamp;}
 }

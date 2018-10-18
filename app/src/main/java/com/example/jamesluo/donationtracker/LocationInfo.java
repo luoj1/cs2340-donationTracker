@@ -29,6 +29,11 @@ public class LocationInfo extends Activity {
         String location_latitude = "Latitude: " + getIntent().getStringExtra("Latitude");
         String location_address= "Address: " + getIntent().getStringExtra("Address");
         String location_phone = "Phone number: " + getIntent().getStringExtra("Phone");
+        String userId = getIntent().getStringExtra("id");
+        Info info = Model.getInfo().get(userId);
+        if(info.type .equals("Location Employee")) {
+            //set add button visible
+        }
         location_name.setText(name);
         location_type.setText(type);
         longitude.setText(location_longitude);

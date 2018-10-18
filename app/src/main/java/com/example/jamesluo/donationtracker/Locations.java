@@ -38,6 +38,7 @@ public class Locations extends Activity {
                                     int position, long id) {
                 //Toast.makeText(getBaseContext() ,Integer.toString(position) + " selected", Toast.LENGTH_LONG).show();
                 Intent in = new Intent(Locations.this, LocationInfo.class);
+                in.putExtra("id", getIntent().getStringExtra("id"));
                 in.putExtra("Name", Model.getLocations().get(position).getLocation().get("Name"));
                 in.putExtra("Type", Model.getLocations().get(position).getLocation().get("Type"));
                 in.putExtra("Longitude", Model.getLocations().get(position).getLocation().get("Longitude"));
