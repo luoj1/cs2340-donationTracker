@@ -93,9 +93,9 @@ class Info {
 class Location {
     private Map<String, String> location;
 
-    private int key;
+    private int key_location;
 
-    public Location(Map<String, String> location , int key) {this.location = location;this.key = key;}
+    public Location(Map<String, String> location , int key) {this.location = location;key_location = key;}
 
     public Map<String, String> getLocation() {
         return location;
@@ -109,9 +109,9 @@ class Location {
 class Item {
     private Map<String, String> item;
 
-    private int key;
+    private int key_item;
 
-    public Item(Map<String, String> location , int key) {this.item = location;this.key = key;}
+    public Item(Map<String, String> location , int key) {this.item = location;key_item = key;}
 
     public Map<String, String> getItem() {
         return item;
