@@ -52,7 +52,7 @@ public class Model {
         for (CSVRecord csvRecord: data) {
             Map<String,String> locationData = csvRecord.toMap();
             Log.d("-----------------", locationData.keySet().toString());
-            //----key set -> Zip, Type, State, Phone, Street Address, Website, Latitude, ﻿Key, City, Longitude, Name
+            //key set -> Zip, Type, State, Phone, Street Address, Website, Latitude, ﻿Key, City, Longitude, Name
             Location location = new Location(locationData, key);
             locations.add(key,location);
             key++;
@@ -107,33 +107,17 @@ class Location {
 }
 
 class Item {
-    private String timeStamp;
-    private String item_location;
-    private String shortDescription;
-    private String fullDescription;
-    private String item_value;
-    private String category;
+    private Map<String, String> item;
 
-    public Item(String timeStamp, String item_location, String shortDescription, String fullDescription,
-                String item_value, String category) {
-        this.timeStamp = timeStamp;
-        this.item_location = item_location;
-        this.fullDescription = fullDescription;
-        this.shortDescription = shortDescription;
-        this.item_value = item_value;
-        this.category = category;
+    private int key;
+
+    public Item(Map<String, String> location , int key) {this.item = location;this.key = key;}
+
+    public Map<String, String> getItem() {
+        return item;
     }
-    public String getTimeStamp(){return this.timeStamp;}
-    public String getCategory() {return this.category;}
-    public String getFullDescription() {return this.fullDescription;}
-    public String getItem_location() {return this.item_location;}
-    public String getItem_value() {return this.item_value;}
-    public String getShortDescription() {return shortDescription;}
 
-    public void setCategory(String category) {this.category = category;}
-    public void setFullDescription(String fullDescription) {this.fullDescription = fullDescription;}
-    public void setItem_location(String item_location) {this.item_location = item_location;}
-    public void setItem_value(String item_value) {this.item_value = item_value;}
-    public void setShortDescription(String shortDescription) {this.shortDescription = shortDescription;}
-    public void setTimeStamp(String timeStamp) {this.timeStamp = timeStamp;}
+    public void setItem(Map<String, String> location) {
+        this.item = location;
+    }
 }
