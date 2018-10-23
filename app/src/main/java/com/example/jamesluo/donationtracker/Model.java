@@ -33,13 +33,22 @@ public class Model {
     private static HashMap<String, String> auth = new HashMap<>();
     private static HashMap<String, Info> info = new HashMap<>();
     private static ArrayList<Location> locations = new ArrayList<>();
+    private static ArrayList<Location> locations2 = new ArrayList<>();
     private static ArrayList<Item> items = new ArrayList<>();
 
     public static HashMap<String, Info> getInfo(){
         return info;
     }
     public static List<Location> getLocations(){
-        return locations;
+        ArrayList<Location> out = new ArrayList<>();
+        out.addAll(locations);
+        out.addAll(locations2);
+        int k = 0;
+        for (Location l : out) {
+            l.setKey(k);
+            k++;
+        }
+        return out;
     }
     public static List<Item> getItems() {return items; }
     public static void buildLocationCSV(InputStream ins) throws FileNotFoundException, IOException {
@@ -52,11 +61,16 @@ public class Model {
         for (CSVRecord csvRecord: data) {
             Map<String,String> locationData = csvRecord.toMap();
             Log.d("-----------------", locationData.keySet().toString());
-            //----key set -> Zip, Type, State, Phone, Street Address, Website, Latitude, ﻿Key, City, Longitude, Name
+            //Zip, Type, State, Phone, Street Address, Website, Latitude, ﻿Key, City, Longitude, Name
             Location location = new Location(locationData, key);
             locations.add(key,location);
             key++;
         }
+    }
+
+    public static void addLocation(Map<String, String> hm) {
+        locations2.add(new Location(hm, 0));
+
     }
 
     public static boolean verify(String u, String p){
@@ -94,7 +108,12 @@ class Location {
     private Map<String, String> location;
 
     private int key;
-
+    public int getKey(){
+        return key;
+    }
+    public void setKey(int key){
+        this.key = key;
+    }
     public Location(Map<String, String> location , int key) {this.location = location;this.key = key;}
 
     public Map<String, String> getLocation() {
