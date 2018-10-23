@@ -40,5 +40,13 @@ public class LocationInfo extends Activity {
         latitude.setText(location_latitude);
         address.setText(location_address);
         phone.setText(location_phone);
+        Button addItem = (Button) findViewById(R.id.add_item);
+        addItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LocationInfo.this, AddItem.class);
+                startActivity(i);
+            }
+        });
     }
 }
