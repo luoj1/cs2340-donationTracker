@@ -31,6 +31,7 @@ public class Locations extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
         listview.setAdapter(adapter);
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

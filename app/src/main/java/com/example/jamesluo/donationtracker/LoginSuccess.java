@@ -42,6 +42,7 @@ public class LoginSuccess extends AppCompatActivity {
         //ArrayList<Location> location = Model.buildLocationXLSX("./LocationData.xlsx");
 
         Button locationData = (Button) findViewById(R.id.location);
+        Log.d("id in login succcess",getIntent().getStringExtra("id"));
         locationData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

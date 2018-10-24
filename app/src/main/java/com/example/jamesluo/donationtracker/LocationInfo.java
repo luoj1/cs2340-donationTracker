@@ -1,10 +1,18 @@
 package com.example.jamesluo.donationtracker;
 
 import android.app.Activity;
+
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +38,11 @@ public class LocationInfo extends Activity {
         String location_address= "Address: " + getIntent().getStringExtra("Address");
         String location_phone = "Phone number: " + getIntent().getStringExtra("Phone");
         String userId = getIntent().getStringExtra("id");
+        Log.d("id in login info",getIntent().getStringExtra("id"));
         Info info = Model.getInfo().get(userId);
+        Log.d("loc info", info.name);
+        Log.d("loc info", info.type);
+
         if(info.type .equals("Location Employee")) {
             //set add button visible
         }
@@ -45,9 +57,39 @@ public class LocationInfo extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LocationInfo.this, AddItem.class);
-                i.putExtra("Location of Donation",getIntent().getStringExtra(name));
+                i.putExtra("Location of Donation",name);
                 startActivity(i);
             }
         });
+
+        final ListView listview = (ListView) findViewById(R.id.itemlist);
+        if (Model.getItems(name) != null) {
+            String[] values = new String[Model.getItems(name).size()];
+            int tracker =0;
+            for (Item i : Model.getItems(name)) {
+                values[tracker] = Model.getItems(name).get(tracker).getItem().get("Short Description");
+                tracker ++ ;
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, values);
+            listview.setAdapter(adapter);
+        }
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                //change to item
+                Intent in = new Intent(LocationInfo.this, ItemInfo.class);
+                in.putExtra("Location", Model.getItems(name).get(position).getItem().get("location"));
+                in.putExtra("Timestamp", Model.getItems(name).get(position).getItem().get("timestamp"));
+                in.putExtra("ShortDescription", Model.getItems(name).get(position).getItem().get("shortDescription"));
+                in.putExtra("FullDescription", Model.getItems(name).get(position).getItem().get("fullDescription"));
+                in.putExtra("Value", Model.getItems(name).get(position).getItem().get("value"));
+                in.putExtra("Category", Model.getItems(name).get(position).getItem().get("category"));
+                startActivity(in);
+            }
+        });
+
     }
 }

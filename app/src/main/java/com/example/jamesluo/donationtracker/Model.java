@@ -32,25 +32,26 @@ public class Model {
     //type: account type
     private static HashMap<String, String> auth = new HashMap<>();
     private static HashMap<String, Info> info = new HashMap<>();
+    private static HashMap<String, List<Item>> items = new HashMap<>();
     private static ArrayList<Location> locations = new ArrayList<>();
-    private static ArrayList<Location> locations2 = new ArrayList<>();
-    private static ArrayList<Item> items = new ArrayList<>();
+    //private static ArrayList<Item> items = new ArrayList<>();
 
     public static HashMap<String, Info> getInfo(){
         return info;
     }
     public static List<Location> getLocations(){
-        ArrayList<Location> out = new ArrayList<>();
-        out.addAll(locations);
-        out.addAll(locations2);
-        int k = 0;
-        for (Location l : out) {
-            l.setKey(k);
-            k++;
-        }
-        return out;
+        return locations;
     }
-    public static List<Item> getItems() {return items; }
+    public static void setItems(String s, Item it) {
+        if(items.containsKey(s)){
+            items.get(s).add(it);
+        }else{
+            items.put(s, new ArrayList<Item>());
+            items.get(s).add(it);
+        }
+    }
+    public static List<Item> getItems(String s) {if (items.containsKey(s)) return items.get(s); else return null; }
+
     public static void buildLocationCSV(InputStream ins) throws FileNotFoundException, IOException {
     //TODO init location array
         locations = new ArrayList<>();
@@ -68,10 +69,6 @@ public class Model {
         }
     }
 
-    public static void addLocation(Map<String, String> hm) {
-        locations2.add(new Location(hm, 0));
-
-    }
 
     public static boolean verify(String u, String p){
         if (auth.containsKey(u) && auth.get(u).equals(p)){
@@ -84,6 +81,7 @@ public class Model {
         return auth.containsKey(u);
     }
     public static void addUser(String user, String pwd,String type, String id) {
+        //email as id
         auth.put(id,pwd);
         info.put(id, new Info(user, type ,id));
     }

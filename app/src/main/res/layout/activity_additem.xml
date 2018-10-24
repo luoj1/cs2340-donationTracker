@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:maxLines="1"
-                android:autofillHints="Time Stamp of Donation"
+                android:hint="Time Stamp of Donation"
                 android:singleLine="true" />
 
         </android.support.design.widget.TextInputLayout>
@@ -35,7 +35,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:autofillHints="Short Description of Item" />
+                android:hint="Short Description of Item" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -50,7 +50,7 @@
                 android:inputType="text"
                 android:maxLines="4"
                 android:singleLine="true"
-                android:autofillHints="Full Description of Item"/>
+                android:hint="Full Description of Item"/>
 
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
@@ -58,13 +58,13 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/item_value"
+                android:id="@+id/value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:autofillHints="Value"/>
+                android:hint="Value"/>
 
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
@@ -78,7 +78,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:autofillHints="Category"/>
+                android:hint="Category"/>
 
         </android.support.design.widget.TextInputLayout>
 

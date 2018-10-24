@@ -5,47 +5,37 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/location_name"
+        android:id="@+id/item_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/location_type"
+        android:id="@+id/item_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/longitude"
+        android:id="@+id/item_shortDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/item_fullDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"/>
     <TextView
-        android:id="@+id/latitude"
+        android:id="@+id/item_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/location_address"
+        android:id="@+id/item_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"/>
-
-    <TextView
-        android:id="@+id/location_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"/>
-    <Button
-        android:id="@+id/add_item"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:paddingTop="15dp"
-        android:text="@string/add_item" />
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/itemlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 </LinearLayout>
