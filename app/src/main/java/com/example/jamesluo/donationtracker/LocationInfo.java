@@ -35,18 +35,22 @@ public class LocationInfo extends Activity {
         TextView address = (TextView) findViewById(R.id.location_address);
         TextView phone = (TextView) findViewById(R.id.location_phone);
         final String name = "Name: " + getIntent().getStringExtra("Name");
+        Log.d("additem","3");
         String type = "Type: " + getIntent().getStringExtra("Type");
         String location_longitude = "Longitude: " + getIntent().getStringExtra("Longitude");
         String location_latitude = "Latitude: " + getIntent().getStringExtra("Latitude");
         String location_address= "Address: " + getIntent().getStringExtra("Address");
         String location_phone = "Phone number: " + getIntent().getStringExtra("Phone");
         String userId = getIntent().getStringExtra("id");
-
+        Log.d("locinfo","4");
         Info info = Model.getInfo().get(userId);
 
-
+        Button addItem = (Button) findViewById(R.id.add_item);
         if(info.type .equals("Location Employee")) {
             //set add button visible
+            addItem.setVisibility(View.VISIBLE);
+        }else{
+            addItem.setVisibility(View.INVISIBLE);
         }
         location_name.setText(name);
         location_type.setText(type);
@@ -54,14 +58,14 @@ public class LocationInfo extends Activity {
         latitude.setText(location_latitude);
         address.setText(location_address);
         phone.setText(location_phone);
-        Button addItem = (Button) findViewById(R.id.add_item);
+
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LocationInfo.this, AddItem.class);
                 i.putExtra("id", getIntent().getStringExtra("id"));
                 i.putExtra("Location of Donation",name);
-                i.putExtra("id", getIntent().getStringExtra("id"));
+                //i.putExtra("id", getIntent().getStringExtra("id"));
                 i.putExtra("Name", getIntent().getStringExtra("Name"));
                 i.putExtra("Type", getIntent().getStringExtra("Type"));
                 i.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
@@ -71,19 +75,20 @@ public class LocationInfo extends Activity {
                 startActivity(i);
             }
         });
-
+        Log.d("beginresolve itemview","");
         final ListView listview = (ListView) findViewById(R.id.itemlist);
         if (Model.getItems(name) != null) {
             String[] values = new String[Model.getItems(name).size()];
             int tracker =0;
             for (Item i : Model.getItems(name)) {
-                values[tracker] = Model.getItems(name).get(tracker).getItem().get("Short Description");
+                values[tracker] = Model.getItems(name).get(tracker).getItem().get("shortDescription");
                 tracker ++ ;
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1, values);
             listview.setAdapter(adapter);
         }
+        Log.d("finishresolve itemview","");
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

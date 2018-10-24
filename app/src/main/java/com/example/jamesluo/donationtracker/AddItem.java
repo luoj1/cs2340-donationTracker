@@ -3,6 +3,7 @@ package com.example.jamesluo.donationtracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ public class AddItem extends Activity {
         final EditText category = (EditText) findViewById(R.id.category);
         final String locationOfDonation = getIntent().getStringExtra("Location of Donation");
         Button submit = (Button) findViewById(R.id.add_item_successful);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,7 +40,7 @@ public class AddItem extends Activity {
                 i.putExtra("Latitude", getIntent().getStringExtra("Latitude"));
                 i.putExtra("Address", getIntent().getStringExtra("Address"));
                 i.putExtra("Phone", getIntent().getStringExtra("Phone"));
-
+                Log.d("additem","2");
                 String item_timestamp = timestamp.getText().toString();
                 String item_short = shortDescription.getText().toString();
                 String item_full = fullDescription.getText().toString();
@@ -52,7 +54,9 @@ public class AddItem extends Activity {
                 item.put("value",item_value);
                 item.put("category",item_category);
                 final Item newItem = new Item(item);
+                Log.d("additem","3");
                 Model.setItems(locationOfDonation, newItem);
+                Log.d("additem","4");
                 startActivity(i);
             }
         });
