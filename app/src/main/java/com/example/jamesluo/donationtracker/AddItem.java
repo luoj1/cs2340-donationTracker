@@ -29,8 +29,16 @@ public class AddItem extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AddItem.this, Location.class);
+
+                Intent i = new Intent(AddItem.this, LocationInfo.class);
                 i.putExtra("id", getIntent().getStringExtra("id"));
+                i.putExtra("Name", getIntent().getStringExtra("Name"));
+                i.putExtra("Type", getIntent().getStringExtra("Type"));
+                i.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
+                i.putExtra("Latitude", getIntent().getStringExtra("Latitude"));
+                i.putExtra("Address", getIntent().getStringExtra("Address"));
+                i.putExtra("Phone", getIntent().getStringExtra("Phone"));
+
                 String item_timestamp = timestamp.getText().toString();
                 String item_short = shortDescription.getText().toString();
                 String item_full = fullDescription.getText().toString();
@@ -54,6 +62,14 @@ public class AddItem extends Activity {
             public void onClick(View view) {
                 Intent i = new Intent(AddItem.this, LocationInfo.class);
                 i.putExtra("id", getIntent().getStringExtra("id"));
+
+                i.putExtra("Name", getIntent().getStringExtra("Name"));
+                i.putExtra("Type", getIntent().getStringExtra("Type"));
+                i.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
+                i.putExtra("Latitude", getIntent().getStringExtra("Latitude"));
+                i.putExtra("Address", getIntent().getStringExtra("Address"));
+                i.putExtra("Phone", getIntent().getStringExtra("Phone"));
+
                 startActivity(i);
             }
         });
