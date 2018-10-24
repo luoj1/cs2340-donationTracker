@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class Locations extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
         listview.setAdapter(adapter);
-
+        Log.d("id in locations",getIntent().getStringExtra("id"));
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -39,6 +40,7 @@ public class Locations extends Activity {
                                     int position, long id) {
                 //Toast.makeText(getBaseContext() ,Integer.toString(position) + " selected", Toast.LENGTH_LONG).show();
                 Intent in = new Intent(Locations.this, LocationInfo.class);
+                Log.d("position clicked",""+position);
                 in.putExtra("id", getIntent().getStringExtra("id"));
                 in.putExtra("Name", Model.getLocations().get(position).getLocation().get("Name"));
                 in.putExtra("Type", Model.getLocations().get(position).getLocation().get("Type"));

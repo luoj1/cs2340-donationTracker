@@ -29,7 +29,7 @@ public class ItemInfo extends Activity {
         String item_timestamp = "Time stamp of Donation: " + getIntent().getStringExtra("Timestamp");
         String item_shortDescription = "Short Description: " + getIntent().getStringExtra("ShortDescription");
         String item_fullDescription = "Full Description: " + getIntent().getStringExtra("FullDescription");
-        String item_value = "Value: " + getIntent().getStringExtra("Value");
+        String item_value = "Value: $" + getIntent().getStringExtra("Value");
         String item_category = "Category: " + getIntent().getStringExtra("Category");
         location_name.setText(item_location);
         value.setText(item_value);

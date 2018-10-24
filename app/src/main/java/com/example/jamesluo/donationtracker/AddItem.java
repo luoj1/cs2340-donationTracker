@@ -29,7 +29,8 @@ public class AddItem extends Activity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(AddItem.this, LocationInfo.class);
+                Intent i = new Intent(AddItem.this, Location.class);
+                i.putExtra("id", getIntent().getStringExtra("id"));
                 String item_timestamp = timestamp.getText().toString();
                 String item_short = shortDescription.getText().toString();
                 String item_full = fullDescription.getText().toString();
@@ -52,6 +53,7 @@ public class AddItem extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(AddItem.this, LocationInfo.class);
+                i.putExtra("id", getIntent().getStringExtra("id"));
                 startActivity(i);
             }
         });

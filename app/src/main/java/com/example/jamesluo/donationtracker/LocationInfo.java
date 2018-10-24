@@ -25,6 +25,9 @@ public class LocationInfo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_info);
+
+
+
         TextView location_name = (TextView) findViewById(R.id.location_name);
         TextView location_type = (TextView) findViewById(R.id.location_type);
         TextView longitude = (TextView) findViewById(R.id.longitude);
@@ -38,10 +41,10 @@ public class LocationInfo extends Activity {
         String location_address= "Address: " + getIntent().getStringExtra("Address");
         String location_phone = "Phone number: " + getIntent().getStringExtra("Phone");
         String userId = getIntent().getStringExtra("id");
-        Log.d("id in login info",getIntent().getStringExtra("id"));
+        //Log.d("id in login info",getIntent().getStringExtra("id"));
         Info info = Model.getInfo().get(userId);
-        Log.d("loc info", info.name);
-        Log.d("loc info", info.type);
+        //Log.d("loc info", info.name);
+        //Log.d("loc info", info.type);
 
         if(info.type .equals("Location Employee")) {
             //set add button visible
@@ -57,6 +60,7 @@ public class LocationInfo extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LocationInfo.this, AddItem.class);
+                i.putExtra("id", getIntent().getStringExtra("id"));
                 i.putExtra("Location of Donation",name);
                 startActivity(i);
             }
@@ -92,4 +96,5 @@ public class LocationInfo extends Activity {
         });
 
     }
+
 }
