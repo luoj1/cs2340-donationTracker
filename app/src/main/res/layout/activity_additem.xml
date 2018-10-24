@@ -64,7 +64,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:hint="Value"/>
+                android:hint="Value(In Dollars)"/>
 
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout

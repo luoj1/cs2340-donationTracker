@@ -38,10 +38,7 @@ public class LocationInfo extends Activity {
         String location_address= "Address: " + getIntent().getStringExtra("Address");
         String location_phone = "Phone number: " + getIntent().getStringExtra("Phone");
         String userId = getIntent().getStringExtra("id");
-        Log.d("id in login info",getIntent().getStringExtra("id"));
         Info info = Model.getInfo().get(userId);
-        Log.d("loc info", info.name);
-        Log.d("loc info", info.type);
 
         if(info.type .equals("Location Employee")) {
             //set add button visible
@@ -58,6 +55,13 @@ public class LocationInfo extends Activity {
             public void onClick(View view) {
                 Intent i = new Intent(LocationInfo.this, AddItem.class);
                 i.putExtra("Location of Donation",name);
+                i.putExtra("id", getIntent().getStringExtra("id"));
+                i.putExtra("Name", getIntent().getStringExtra("Name"));
+                i.putExtra("Type", getIntent().getStringExtra("Type"));
+                i.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
+                i.putExtra("Latitude", getIntent().getStringExtra("Latitude"));
+                i.putExtra("Address", getIntent().getStringExtra("Address"));
+                i.putExtra("Phone", getIntent().getStringExtra("Phone"));
                 startActivity(i);
             }
         });
@@ -87,6 +91,13 @@ public class LocationInfo extends Activity {
                 in.putExtra("FullDescription", Model.getItems(name).get(position).getItem().get("fullDescription"));
                 in.putExtra("Value", Model.getItems(name).get(position).getItem().get("value"));
                 in.putExtra("Category", Model.getItems(name).get(position).getItem().get("category"));
+                in.putExtra("id", getIntent().getStringExtra("id"));
+                in.putExtra("Name", getIntent().getStringExtra("Name"));
+                in.putExtra("Type", getIntent().getStringExtra("Type"));
+                in.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
+                in.putExtra("Latitude", getIntent().getStringExtra("Latitude"));
+                in.putExtra("Address", getIntent().getStringExtra("Address"));
+                in.putExtra("Phone", getIntent().getStringExtra("Phone"));
                 startActivity(in);
             }
         });
