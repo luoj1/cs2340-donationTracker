@@ -129,9 +129,7 @@ class Location {
 class Item {
     private Map<String, String> item;
 
-    private int key_item;
-
-    public Item(Map<String, String> location , int key) {this.item = location;key_item = key;}
+    public Item(Map<String, String> location) {this.item = location;}
 
     public Map<String, String> getItem() {
         return item;

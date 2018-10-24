@@ -9,86 +9,94 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.jamesluo.donationtracker.Login">
-
-
-    <ScrollView
-        android:id="@+id/login_form"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/"
+         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:imeActionId="6"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionUnspecified"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true" />
+            android:layout_height="wrap_content">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/timestamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:autofillHints="Time Stamp of Donation"
+                android:singleLine="true" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/Location"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:imeActionId="6"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionUnspecified"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true" />
+            android:layout_height="wrap_content">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/short_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:autofillHints="Short Description of Item" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/password"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Password"
-            android:imeActionId="6"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionUnspecified"
-            android:inputType="text"
-            android:maxLines="1"
-            android:singleLine="true" />
+            android:layout_height="wrap_content">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/full_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="4"
+                android:singleLine="true"
+                android:autofillHints="Full Description of Item"/>
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/item_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:autofillHints="Value"/>
+
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:autofillHints="Category"/>
+
+        </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/email_sign_in_button"
+                android:id="@+id/add_item_successful"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Log in"
+                android:text="Add Item"
                 android:textStyle="bold" />
             <Button
-                android:id="@+id/cancel"
+                android:id="@+id/cancel1"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Cancel"
-                android:textStyle="bold"
-                android:onClick="onCancelPressed" />
+                android:textStyle="bold" />
 
-
-    </ScrollView>
 </LinearLayout>

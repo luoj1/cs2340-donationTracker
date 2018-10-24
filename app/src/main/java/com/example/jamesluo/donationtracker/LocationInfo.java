@@ -23,7 +23,7 @@ public class LocationInfo extends Activity {
         TextView latitude = (TextView) findViewById(R.id.latitude);
         TextView address = (TextView) findViewById(R.id.location_address);
         TextView phone = (TextView) findViewById(R.id.location_phone);
-        String name = "Name: " + getIntent().getStringExtra("Name");
+        final String name = "Name: " + getIntent().getStringExtra("Name");
         String type = "Type: " + getIntent().getStringExtra("Type");
         String location_longitude = "Longitude: " + getIntent().getStringExtra("Longitude");
         String location_latitude = "Latitude: " + getIntent().getStringExtra("Latitude");
@@ -45,6 +45,7 @@ public class LocationInfo extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LocationInfo.this, AddItem.class);
+                i.putExtra("Location of Donation",getIntent().getStringExtra(name));
                 startActivity(i);
             }
         });
