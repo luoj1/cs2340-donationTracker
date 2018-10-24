@@ -112,7 +112,15 @@ public class LocationInfo extends Activity {
                 startActivity(in);
             }
         });
-
+        Button back = (Button) findViewById(R.id.back_to_locations);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LocationInfo.this, Locations.class);
+                i.putExtra("id", getIntent().getStringExtra("id"));
+                startActivity(i);
+            }
+        });
     }
 
 }

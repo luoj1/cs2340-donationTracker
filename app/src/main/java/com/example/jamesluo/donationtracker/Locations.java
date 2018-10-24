@@ -51,6 +51,15 @@ public class Locations extends Activity {
                 startActivity(in);
             }
         });
+        Button back = (Button) findViewById(R.id.back_to_login_success);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Locations.this, LoginSuccess.class);
+                i.putExtra("id", getIntent().getStringExtra("id"));
+                startActivity(i);
+            }
+        });
     }
 
 

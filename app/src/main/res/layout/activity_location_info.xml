@@ -38,14 +38,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"/>
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/itemlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/add_item"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:paddingTop="15dp"
         android:text="@string/add_item" />
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/itemlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/back_to_locations"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:paddingTop="15dp"
+        android:text="Back" />
 </LinearLayout>
