@@ -25,9 +25,13 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.0.3'
+    implementation 'com.google.firebase:firebase-core:16.0.3'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api "org.apache.commons:commons-csv:1.5"
     api 'com.opencsv:opencsv:3.9'
 }
+apply plugin: 'com.google.gms.google-services'

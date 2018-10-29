@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,6 +23,8 @@ public class LoginSuccess extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_success);
         Button logout = (Button) findViewById(R.id.logout);
+        Toast.makeText(getApplicationContext(),"welcome "+getIntent().getStringExtra("username"),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"uid in ls: " + getIntent().getStringExtra("uid"),Toast.LENGTH_SHORT).show();
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,5 +54,9 @@ public class LoginSuccess extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(LoginSuccess.this, Login.class);
+        startActivity(intent);
+    }
 }
