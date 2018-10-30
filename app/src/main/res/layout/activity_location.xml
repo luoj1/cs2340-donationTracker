@@ -4,15 +4,35 @@
     android:layout_height="match_parent"
 
     android:orientation="vertical" >
+
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/listview"
+        android:layout_width="437dp"
+        android:layout_height="400dp" />
+    <EditText
+        android:id="@+id/Name_or_Category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:maxLines="4"
+        android:singleLine="true"
+        android:hint="Name or Category"/>
+    <RadioButton
+        android:id="@+id/searchByName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="Search by Name" />
+    <RadioButton
+        android:id="@+id/searchByCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search by Category" />
+
     <Button
         android:id="@+id/search_items"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
         android:paddingTop="15dp"
-        android:text="@string/search_items" />
+        android:text="Search Items" />
 
 </LinearLayout>

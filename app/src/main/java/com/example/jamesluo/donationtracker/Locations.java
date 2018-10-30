@@ -104,15 +104,7 @@ public class Locations extends Activity {
                 }
             });
         }
-        Button search = (Button) findViewById(R.id.search_items);
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Locations.this, SearchItems.class);
-                i.putExtra("SearchScope","All");
-                startActivity(i);
-            }
-        });
+
     }
     @Override
     public void onBackPressed(){
