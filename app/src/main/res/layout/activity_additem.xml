@@ -29,13 +29,13 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/short_description"
+                android:id="@+id/item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:hint="Short Description of Item" />
+                android:hint="Item Name" />
 
         </android.support.design.widget.TextInputLayout>
 

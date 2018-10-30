@@ -81,7 +81,7 @@ public class LocationInfo extends Activity {
             String[] values = new String[Model.getItems(name).size()];
             int tracker =0;
             for (Item i : Model.getItems(name)) {
-                values[tracker] = Model.getItems(name).get(tracker).getItem().get("shortDescription");
+                values[tracker] = Model.getItems(name).get(tracker).getItem().get("ItemName");
                 tracker ++ ;
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -98,7 +98,7 @@ public class LocationInfo extends Activity {
                 Intent in = new Intent(LocationInfo.this, ItemInfo.class);
                 in.putExtra("Location", Model.getItems(name).get(position).getItem().get("location"));
                 in.putExtra("Timestamp", Model.getItems(name).get(position).getItem().get("timestamp"));
-                in.putExtra("ShortDescription", Model.getItems(name).get(position).getItem().get("shortDescription"));
+                in.putExtra("ItemName", Model.getItems(name).get(position).getItem().get("ItemName"));
                 in.putExtra("FullDescription", Model.getItems(name).get(position).getItem().get("fullDescription"));
                 in.putExtra("Value", Model.getItems(name).get(position).getItem().get("value"));
                 in.putExtra("Category", Model.getItems(name).get(position).getItem().get("category"));
@@ -110,6 +110,15 @@ public class LocationInfo extends Activity {
                 in.putExtra("Address", getIntent().getStringExtra("Address"));
                 in.putExtra("Phone", getIntent().getStringExtra("Phone"));
                 startActivity(in);
+            }
+        });
+        Button search = (Button) findViewById(R.id.search_items);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LocationInfo.this, SearchItems.class);
+                i.putExtra("SearchScope","Single");
+                startActivity(i);
             }
         });
     }

@@ -17,7 +17,7 @@
         android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/item_shortDescription"
+        android:id="@+id/item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"/>

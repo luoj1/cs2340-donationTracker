@@ -22,7 +22,7 @@ public class AddItem extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additem);
         final EditText timestamp = (EditText) findViewById(R.id.timestamp);
-        final EditText shortDescription = (EditText) findViewById(R.id.short_description);
+        final EditText itemName = (EditText) findViewById(R.id.item_name);
         final EditText fullDescription = (EditText) findViewById(R.id.full_description);
         final EditText value = (EditText) findViewById(R.id.value);
         final EditText category = (EditText) findViewById(R.id.category);
@@ -44,14 +44,14 @@ public class AddItem extends Activity {
                 i.putExtra("Phone", getIntent().getStringExtra("Phone"));
                 Log.d("additem","2");
                 String item_timestamp = timestamp.getText().toString();
-                String item_short = shortDescription.getText().toString();
+                String item_name = itemName.getText().toString();
                 String item_full = fullDescription.getText().toString();
                 String item_value = value.getText().toString();
                 String item_category = category.getText().toString();
                 Map<String,String> item = new HashMap<>();
                 item.put("location",locationOfDonation);
                 item.put("timestamp",item_timestamp);
-                item.put("shortDescription",item_short);
+                item.put("ItemName",item_name);
                 item.put("fullDescription",item_full);
                 item.put("value",item_value);
                 item.put("category",item_category);

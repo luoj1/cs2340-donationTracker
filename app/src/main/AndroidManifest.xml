@@ -41,6 +41,9 @@
             android:name=".ItemInfo"
             android:label="Item Details" />
         <activity
+            android:name=".SearchItems"
+            android:label="Search Items" />
+        <activity
             android:name=".LoginSuccess"
             android:label="@string/title_activity_login_success"
             android:theme="@style/AppTheme.NoActionBar"></activity>

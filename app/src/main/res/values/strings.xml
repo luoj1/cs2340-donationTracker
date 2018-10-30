@@ -25,5 +25,6 @@
     <string name="logout">logout</string>
     <string name="register">register</string>
     <string name="add_item">add item</string>
+    <string name="search_items">Search Items</string>
 
 </resources>
