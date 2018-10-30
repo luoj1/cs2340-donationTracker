@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.content.Intent;
 import android.widget.Spinner;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
+        AuthModel.initAuth();
         Button login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,5 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
     }
 }

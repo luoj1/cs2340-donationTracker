@@ -17,40 +17,93 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class Locations extends Activity {
+    private class SingleLocation{
+        String name;
+        String latitude;
+        String longitude;
+        String street_addr;
+        String city;
+        String state;
+        String type;
+        String phone;
+        String website;
+        String zip;
+    }
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_location);
-
-        final ListView listview = (ListView) findViewById(R.id.listview);
-        String[] values = new String[Model.getLocations().size()];
-        int tracker =0 ;
-        for (Location l : Model.getLocations()) {
-            values[tracker] = Model.getLocations().get(tracker).getLocation().get("Name");
-            tracker ++ ;
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, values);
-        listview.setAdapter(adapter);
-        Log.d("id in locations",getIntent().getStringExtra("id"));
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                //Toast.makeText(getBaseContext() ,Integer.toString(position) + " selected", Toast.LENGTH_LONG).show();
-                Intent in = new Intent(Locations.this, LocationInfo.class);
-                Log.d("position clicked",""+position);
-                in.putExtra("id", getIntent().getStringExtra("id"));
-                in.putExtra("Name", Model.getLocations().get(position).getLocation().get("Name"));
-                in.putExtra("Type", Model.getLocations().get(position).getLocation().get("Type"));
-                in.putExtra("Longitude", Model.getLocations().get(position).getLocation().get("Longitude"));
-                in.putExtra("Latitude", Model.getLocations().get(position).getLocation().get("Latitude"));
-                in.putExtra("Address", Model.getLocations().get(position).getLocation().get("Street Address"));
-                in.putExtra("Phone", Model.getLocations().get(position).getLocation().get("Phone"));
-                startActivity(in);
+        if (getIntent().getStringExtra("locations") == null){
+            ServerModel.getLocation(Locations.this, Locations.class, LoginSuccess.class,getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"));
+        }else{
+            JSONArray jsonArray;
+            final ArrayList<SingleLocation> list = new ArrayList<>();
+            String[] values = new String[1];
+            try{
+                jsonArray = new JSONArray(getIntent().getStringExtra("locations"));
+                values  = new String[jsonArray.length()];
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonobject = jsonArray.getJSONObject(i);
+                    SingleLocation sl = new SingleLocation();
+                    String name = jsonobject.getString("name");
+                    sl.latitude = jsonobject.getString("latitude");
+                    sl.longitude = jsonobject.getString("longitude");
+                    sl.street_addr = jsonobject.getString("street_addr");
+                    sl.city = jsonobject.getString("city");
+                    sl.state = jsonobject.getString("state");
+                    sl.type = jsonobject.getString("type");
+                    sl.phone = jsonobject.getString("phone");
+                    sl.website = jsonobject.getString("website");
+                    sl.zip = jsonobject.getString("zip");
+                    values[i] = name;
+                    list.add(sl);
+                }
+            }catch (Exception e) {
+                e.printStackTrace();
             }
-        });
+
+
+
+
+            final ListView listview = (ListView) findViewById(R.id.listview);
+
+            int tracker =0 ;
+            for (Location l : Model.getLocations()) {
+                values[tracker] = Model.getLocations().get(tracker).getLocation().get("Name");
+                tracker ++ ;
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, values);
+            listview.setAdapter(adapter);
+
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view,
+                                        int position, long id) {
+                    //Toast.makeText(getBaseContext() ,Integer.toString(position) + " selected", Toast.LENGTH_LONG).show();
+
+                    Intent in = new Intent(Locations.this, LocationInfo.class);
+                    Log.d("position clicked",""+position);
+                    in.putExtra("username", getIntent().getStringExtra("username"));
+                    in.putExtra("pw", getIntent().getStringExtra("pw"));
+                    in.putExtra("Name", list.get(position).name);
+                    in.putExtra("Type", list.get(position).type);
+                    in.putExtra("Longitude", list.get(position).longitude);
+                    in.putExtra("Latitude", list.get(position).latitude);
+                    in.putExtra("Address", list.get(position).street_addr);
+                    in.putExtra("Phone", list.get(position).phone);
+                    startActivity(in);
+
+
+                }
+            });
+        }
     }
     @Override
     public void onBackPressed(){
