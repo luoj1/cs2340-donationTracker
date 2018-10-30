@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,8 +27,11 @@ public class AddItem extends Activity {
         final EditText itemName = (EditText) findViewById(R.id.item_name);
         final EditText fullDescription = (EditText) findViewById(R.id.full_description);
         final EditText value = (EditText) findViewById(R.id.value);
-        final EditText category = (EditText) findViewById(R.id.category);
         final String locationOfDonation = getIntent().getStringExtra("Location of Donation");
+        final Spinner category = (Spinner) findViewById(R.id.categoryOfItem);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Category.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category.setAdapter(adapter);
         Button submit = (Button) findViewById(R.id.add_item_successful);
 
 
@@ -47,7 +52,7 @@ public class AddItem extends Activity {
                 String item_name = itemName.getText().toString();
                 String item_full = fullDescription.getText().toString();
                 String item_value = value.getText().toString();
-                String item_category = category.getText().toString();
+                String item_category = category.toString();
                 Map<String,String> item = new HashMap<>();
                 item.put("location",locationOfDonation);
                 item.put("timestamp",item_timestamp);

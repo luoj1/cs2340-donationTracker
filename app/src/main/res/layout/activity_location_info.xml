@@ -30,7 +30,7 @@
     <ListView
         android:id="@+id/itemlist"
         android:layout_width="wrap_content"
-        android:layout_height="408dp" />
+        android:layout_height="394dp" />
 
     <TextView
         android:id="@+id/location_address"
@@ -51,28 +51,35 @@
         android:paddingTop="15dp"
         android:text="@string/add_item" />
     <EditText
-        android:id="@+id/Name_or_Category"
+        android:id="@+id/searchName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:maxLines="4"
         android:singleLine="true"
-        android:hint="Name or Category"/>
-    <RadioButton
-        android:id="@+id/searchByName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search by Name" />
-    <RadioButton
-        android:id="@+id/searchByCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Search by Category" />
-
+        android:hint="Name of items"/>
     <Button
-        android:id="@+id/search_items"
+        android:id="@+id/searchByName"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:paddingTop="15dp"
-        android:text="Search Items" />
+        android:text="Search by Name" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category of items"
+        android:textSize="18sp" />
+
+    <Spinner
+        android:id="@+id/searchCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/searchByCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:paddingTop="15dp"
+        android:text="Search by Category" />
 </LinearLayout>

@@ -12,7 +12,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -112,13 +115,24 @@ public class LocationInfo extends Activity {
                 startActivity(in);
             }
         });
-        Button search = (Button) findViewById(R.id.search_items);
-        search.setOnClickListener(new View.OnClickListener() {
+        EditText nameOfItem = (EditText) findViewById(R.id.search_name);
+        String searchName = nameOfItem.toString();
+        Button searchByName = (Button) findViewById(R.id.searchByName);
+        searchByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(LocationInfo.this, SearchItems.class);
-                i.putExtra("SearchScope","Single");
-                startActivity(i);
+                //do search and create result listview
+            }
+        });
+        Spinner categoryOfItem = (Spinner) findViewById(R.id.searchCategory);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Category.values());
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoryOfItem.setAdapter(adapter);
+        Button searchByCategory = (Button) findViewById(R.id.searchByCategory);
+        searchByCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //do search and create result listview
             }
         });
     }
