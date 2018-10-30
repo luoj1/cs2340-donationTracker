@@ -48,11 +48,4 @@
         android:layout_height="50dp"
         android:paddingTop="15dp"
         android:text="@string/add_item" />
-
-    <Button
-        android:id="@+id/back_to_locations"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:paddingTop="15dp"
-        android:text="Back" />
 </LinearLayout>

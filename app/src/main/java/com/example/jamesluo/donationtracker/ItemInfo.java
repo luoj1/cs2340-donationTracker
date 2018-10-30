@@ -39,4 +39,17 @@ public class ItemInfo extends Activity {
         timestamp.setText(item_timestamp);
 
     }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent in=new Intent(ItemInfo.this, LocationInfo.class);
+        in.putExtra("id", getIntent().getStringExtra("id"));
+        in.putExtra("Name", getIntent().getStringExtra("Name"));
+        in.putExtra("Type", getIntent().getStringExtra("Type"));
+        in.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
+        in.putExtra("Latitude", getIntent().getStringExtra("Latitude"));
+        in.putExtra("Address", getIntent().getStringExtra("Address"));
+        in.putExtra("Phone", getIntent().getStringExtra("Phone"));
+        startActivity(in);
+    }
 }

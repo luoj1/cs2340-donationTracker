@@ -16,6 +16,7 @@ import java.util.Map;
  */
 
 public class AddItem extends Activity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +28,7 @@ public class AddItem extends Activity {
         final EditText category = (EditText) findViewById(R.id.category);
         final String locationOfDonation = getIntent().getStringExtra("Location of Donation");
         Button submit = (Button) findViewById(R.id.add_item_successful);
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
