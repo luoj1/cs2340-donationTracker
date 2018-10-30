@@ -12,10 +12,12 @@ import android.widget.Toast;
  */
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -78,6 +80,68 @@ public class ServerModel    {
                 }
             }
         });
+    }
+    public static void getLocation(final Context from, final Class success, final Class fail, final String username, final String pw){
+        Log.d("serverModel", username);
+
+        RequestBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("pw", pw)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url+"/getLocation")
+                //.addHeader("Accept", "application/json")
+                .header("Connection","close")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                e.printStackTrace();
+                Log.d("fail get location",e.getMessage());
+                Intent intent = new Intent(from,fail);
+                intent.putExtra("username", username);
+                intent.putExtra("pw", pw);
+                from.startActivity(intent);
+                //Toast.makeText(from, "fail in creatring account", Toast.LENGTH_LONG).show();
+                //Toast.makeText(from, "db issue", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //call.cancel();
+                final String myResponse = response.body().string();
+                Log.d("getlocation response", myResponse);
+                if (myResponse .equals("0")){
+                    call.cancel();
+                    Log.d("success",myResponse);
+                    Intent intent = new Intent(from,fail);
+                    intent.putExtra("username", username);
+                    intent.putExtra("pw", pw);
+                    from.startActivity(intent);
+
+                }else{
+                    try{
+
+                        Log.d("success",myResponse);
+
+                        Intent intent = new Intent(from,success);
+                        intent.putExtra("locations",myResponse);
+                        intent.putExtra("username",username);
+                        intent.putExtra("pw",pw);
+                        from.startActivity(intent);
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+
+
+                }
+            }
+            });
     }
 
 }

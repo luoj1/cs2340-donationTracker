@@ -24,7 +24,7 @@ public class LoginSuccess extends AppCompatActivity {
         setContentView(R.layout.activity_login_success);
         Button logout = (Button) findViewById(R.id.logout);
         Toast.makeText(getApplicationContext(),"welcome "+getIntent().getStringExtra("username"),Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(),"uid in ls: " + getIntent().getStringExtra("uid"),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),"uid in ls: " + getIntent().getStringExtra("pw"),Toast.LENGTH_SHORT).show();
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +49,8 @@ public class LoginSuccess extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LoginSuccess.this, Locations.class);
-                i.putExtra("id", getIntent().getStringExtra("id"));
+                i.putExtra("username", getIntent().getStringExtra("username"));
+                i.putExtra("pw", getIntent().getStringExtra("pw"));
                 startActivity(i);
             }
         });

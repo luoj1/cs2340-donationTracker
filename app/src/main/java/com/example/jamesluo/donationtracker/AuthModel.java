@@ -40,7 +40,7 @@ public class AuthModel {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent intent = new Intent(from,success2);
                             intent.putExtra("username", task.getResult().getUser().getEmail()); // email
-                            intent.putExtra("uid", (String) task.getResult().getUser().getUid());
+                            intent.putExtra("pw", (String) task.getResult().getUser().getUid());
                             from.startActivity(intent);
 
                         } else {
