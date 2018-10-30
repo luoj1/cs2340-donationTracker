@@ -237,8 +237,7 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
             // perform the user login attempt.
 
             showProgress(true);
-            mAuthTask = new UserRegisterTask(email, password, name, type);
-            mAuthTask.execute((Void) null);
+            AuthModel.createNewUser(Registration.this,MainActivity.class,Registration.class,email,name,type, password);
         }
     }
 
@@ -368,7 +367,7 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            Model.addUser(mEmail, mPassword, mNameView, mTypeSpinner);
+            Model.addUser(mNameView , mPassword, mTypeSpinner, mEmail);
 
 
             // TODO: register the new account here.

@@ -35,6 +35,12 @@
             android:name=".LocationInfo"
             android:label="@string/title_activity_locationinfo" />
         <activity
+            android:name=".AddItem"
+            android:label="@string/add_item" />
+        <activity
+            android:name=".ItemInfo"
+            android:label="Item Details" />
+        <activity
             android:name=".LoginSuccess"
             android:label="@string/title_activity_login_success"
             android:theme="@style/AppTheme.NoActionBar"></activity>
