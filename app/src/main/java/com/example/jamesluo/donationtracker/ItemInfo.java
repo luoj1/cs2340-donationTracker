@@ -43,7 +43,8 @@ public class ItemInfo extends Activity {
     public void onBackPressed(){
         super.onBackPressed();
         Intent in=new Intent(ItemInfo.this, LocationInfo.class);
-        in.putExtra("id", getIntent().getStringExtra("id"));
+        in.putExtra("username", getIntent().getStringExtra("username"));
+        in.putExtra("pw", getIntent().getStringExtra("pw"));
         in.putExtra("Name", getIntent().getStringExtra("Name"));
         in.putExtra("Type", getIntent().getStringExtra("Type"));
         in.putExtra("Longitude", getIntent().getStringExtra("Longitude"));

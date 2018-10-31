@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -37,14 +38,7 @@ public class Locations extends Activity {
         String website;
         String zip;
     }
-    private class SingleItem{
-        String ItemName;
-        String FullDescription;
-        String Category;
-        String Value;
-        String TimeStamp;
-        String Location;
-    }
+
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_location);
@@ -61,6 +55,7 @@ public class Locations extends Activity {
                     JSONObject jsonobject = jsonArray.getJSONObject(i);
                     SingleLocation sl = new SingleLocation();
                     String name = jsonobject.getString("name");
+                    sl.name = name;
                     sl.latitude = jsonobject.getString("latitude");
                     sl.longitude = jsonobject.getString("longitude");
                     sl.street_addr = jsonobject.getString("street_addr");
@@ -115,10 +110,9 @@ public class Locations extends Activity {
             });
         }
 
-        final ArrayList<SingleItem> items_list = new ArrayList<>();
-        final String[] items_displays =  new String[1];
 
-        EditText nameOfItem = (EditText) findViewById(R.id.searchName);
+        final ListView searchResult = (ListView) findViewById(R.id.searchResult);
+        final EditText nameOfItem = (EditText) findViewById(R.id.searchName);
         String searchName = nameOfItem.toString();
         Button searchByName = (Button) findViewById(R.id.searchByName);
         searchByName.setOnClickListener(new View.OnClickListener() {
@@ -126,32 +120,24 @@ public class Locations extends Activity {
             public void onClick(View view) {
                 //do search and create result listview
 
+                ServerModel.searchItemsByName(Locations.this,searchResult, getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"), nameOfItem.getText().toString());
+
+
             }
         });
-        Spinner categoryOfItem = (Spinner) findViewById(R.id.searchCategory);
+        final Spinner categoryOfItem = (Spinner) findViewById(R.id.searchCategory);
         ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Category.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryOfItem.setAdapter(adapter);
         Button searchByCategory = (Button) findViewById(R.id.searchByCategory);
-        searchByCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //do search and create result listview
-            }
-        });
+
+        Log.d("locations","item_list");
 
 
+        Log.d("locations","adapter");
 
-        final ListView searchResult = (ListView) findViewById(R.id.searchResult);
-        int tracker =0 ;
-        for (Location l : Model.getLocations()) {
-            items_displays[tracker] = Model.getLocations().get(tracker).getLocation().get("Name");
-            tracker ++ ;
-        }
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, items_displays);
-        searchResult.setAdapter(adapter2);
 
+        Log.d("locations","onclick");
         searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -162,18 +148,42 @@ public class Locations extends Activity {
 
             }
         });
+        searchByCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //do search and create result listview
+
+                ServerModel.searchItemsByCategory(Locations.this,searchResult,
+                        getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"),
+                        categoryOfItem.getSelectedItem().toString());
+
+
+            }
+        });
+
     }
+    /*private class Query {
+        String from;
+        String username;
+        String pw;
+        String q;
+    }
+    private class categorySearchUpdater extends AsyncTask<Query,Object,>{
+
+    }*/
     @Override
     public void onBackPressed(){
         super.onBackPressed();
         Intent in=new Intent(Locations.this, LoginSuccess.class);
-        in.putExtra("id", getIntent().getStringExtra("id"));
+        in.putExtra("pw", getIntent().getStringExtra("pw"));
+        in.putExtra("username", getIntent().getStringExtra("username"));
         in.putExtra("Name", getIntent().getStringExtra("Name"));
         in.putExtra("Type", getIntent().getStringExtra("Type"));
         in.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
         in.putExtra("Latitude", getIntent().getStringExtra("Latitude"));
         in.putExtra("Address", getIntent().getStringExtra("Address"));
         in.putExtra("Phone", getIntent().getStringExtra("Phone"));
+
         startActivity(in);
     }
 
