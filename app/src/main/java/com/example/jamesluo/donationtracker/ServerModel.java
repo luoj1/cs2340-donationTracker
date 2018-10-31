@@ -144,4 +144,73 @@ public class ServerModel    {
             });
     }
 
+    public static void getItems(final Context from, final Class success, final Class fail, final String username, final String pw) {
+        RequestBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("pw", pw)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url+"/getItems")
+                //.addHeader("Accept", "application/json")
+                .header("Connection","close")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                e.printStackTrace();
+                Log.d("fail get location",e.getMessage());
+                Intent intent = new Intent(from,fail);
+                intent.putExtra("username", username);
+                intent.putExtra("pw", pw);
+                from.startActivity(intent);
+                //Toast.makeText(from, "fail in creatring account", Toast.LENGTH_LONG).show();
+                //Toast.makeText(from, "db issue", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //call.cancel();
+                final String myResponse = response.body().string();
+                Log.d("getlocation response", myResponse);
+                if (myResponse .equals("0")){
+                    call.cancel();
+                    Log.d("success",myResponse);
+                    Intent intent = new Intent(from,fail);
+                    intent.putExtra("username", username);
+                    intent.putExtra("pw", pw);
+                    from.startActivity(intent);
+
+                }else{
+
+                    Log.d("success",myResponse);
+
+                    /*Intent intent = new Intent(from,success);
+                    intent.putExtra("locations",myResponse);
+                    intent.putExtra("username",username);
+                    intent.putExtra("pw",pw);*/
+                    //from.startActivity(intent);
+
+
+
+
+
+                }
+            }
+        });
+    }
+    public static void searchItemsByCategory(final Context from, final Class success, final Class fail, final String username, final String pw) {
+
+    }
+    public static void searchItemsByName(final Context from, final Class success, final Class fail, final String username, final String pw) {
+
+    }
+    public static void addItems(final Context from, final Class success, final Class fail, final String username, final String pw) {
+
+    }
+    public static void checkUserType (final Context from, final Class success, final Class fail, final String username, final String pw) {
+
+    }
 }

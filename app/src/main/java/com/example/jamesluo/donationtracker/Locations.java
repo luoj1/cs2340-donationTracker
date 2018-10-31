@@ -106,7 +106,7 @@ public class Locations extends Activity {
                 }
             });
         }
-        EditText nameOfItem = (EditText) findViewById(R.id.search_name);
+        EditText nameOfItem = (EditText) findViewById(R.id.searchName);
         String searchName = nameOfItem.toString();
         Button searchByName = (Button) findViewById(R.id.searchByName);
         searchByName.setOnClickListener(new View.OnClickListener() {

@@ -19,11 +19,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by jamesluo on 10/10/18.
  */
 
 public class LocationInfo extends Activity {
+    private class SingleItem{
+        String ItemName;
+        String FullDescription;
+        String Category;
+        String Value;
+        String TimeStamp;
+        String Location;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +59,12 @@ public class LocationInfo extends Activity {
         Info info = Model.getInfo().get(userId);
 
         Button addItem = (Button) findViewById(R.id.add_item);
-        if(info.type .equals("Location Employee")) {
+        /*if(info.type .equals("Location Employee")) {
             //set add button visible
             addItem.setVisibility(View.VISIBLE);
         }else{
             addItem.setVisibility(View.INVISIBLE);
-        }
+        }*/
         location_name.setText(name);
         location_type.setText(type);
         longitude.setText(location_longitude);
@@ -115,13 +125,21 @@ public class LocationInfo extends Activity {
                 startActivity(in);
             }
         });
-        EditText nameOfItem = (EditText) findViewById(R.id.search_name);
+        EditText nameOfItem = (EditText) findViewById(R.id.searchName);
         String searchName = nameOfItem.toString();
         Button searchByName = (Button) findViewById(R.id.searchByName);
+
+
+        final ArrayList<SingleItem> items_list = new ArrayList<>();
+        final String[] items_displays =  new String[1];
+
+
         searchByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //do search and create result listview
+
+
             }
         });
         Spinner categoryOfItem = (Spinner) findViewById(R.id.searchCategory);
@@ -135,6 +153,11 @@ public class LocationInfo extends Activity {
                 //do search and create result listview
             }
         });
+
+
+
+
+
     }
     @Override
     public void onBackPressed(){
