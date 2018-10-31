@@ -1,6 +1,7 @@
 package com.example.jamesluo.donationtracker;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -157,7 +158,8 @@ public class ServerModel    {
             });
     }
 
-    public static void getItems(final Context from, final ListView searchResult, final String username, final String pw, final String location) {
+    public static void getItems(final Context from,final Class ItemInfo, final ListView searchResult, final String username, final String pw, final String location,
+                                final String type, final String longitude, final String latitude, final String phone, final String address) {
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
                 .add("pw", pw)
@@ -243,7 +245,22 @@ public class ServerModel    {
                         @Override
                         public void onItemClick(AdapterView<?> parent, final View view,
                                                 int position, long id) {
-                            //go to item info
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            in.putExtra("Name", location);
+                            in.putExtra("Type",type);
+                            in.putExtra("Longitude", longitude);
+                            in.putExtra("Latitude", latitude);
+                            in.putExtra("Address", address);
+                            in.putExtra("Phone", phone);
+                            from.startActivity(in);
 
                         }
                     });
@@ -253,7 +270,7 @@ public class ServerModel    {
             }
         });
     }
-    public static void searchItemsByCategory(final Context from, final ListView searchResult, final String username, final String pw, final  String category) {
+    public static void searchItemsByCategory(final Context from, final Class ItemInfo,final ListView searchResult, final String username, final String pw, final  String category) {
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
                 .add("pw", pw)
@@ -341,20 +358,17 @@ public class ServerModel    {
                                                 int position, long id) {
                             //go to item info
                             Log.d("clicked cat", items_list.get(position).ItemName);
-                            Toast.makeText(from, "clicked cat: " + items_list.get(position).ItemName + "\nFull Description: \n" + items_list.get(position).FullDescription, Toast.LENGTH_LONG).show();
 
-                            /*Intent intent = new Intent(from,itemInfo);
-                            intent.putExtra("locations",myResponse);
-                            intent.putExtra("locations",myResponse);
-                            intent.putExtra("locations",myResponse);
-                            //inof item
-                            intent.putExtra("username",username);
-                            intent.putExtra("pw",pw);*/
-                            //from.startActivity(intent);
-
-                            /*
-                            */
-
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            from.startActivity(in);
                         }
                     });
 
@@ -367,7 +381,8 @@ public class ServerModel    {
         });
     }
 
-    public static void searchItemsByCategoryLoc(final Context from, final ListView searchResult, final String username, final String pw, final  String category, final String location) {
+    public static void searchItemsByCategoryLoc(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final  String category, final String location,
+                                                final String type, final String longitude, final String latitude, final String phone, final String address) {
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
                 .add("pw", pw)
@@ -406,7 +421,8 @@ public class ServerModel    {
                         public void run() {
                             Log.d("s cat loc","no cat");
                             Toast.makeText(from, "no matched category", Toast.LENGTH_LONG).show();
-                            getItems(from, searchResult, username, pw, location);
+                            getItems(from,ItemInfo,searchResult, username, pw, location,
+                            type, longitude, latitude, phone,  address);
 
                         }
                     });
@@ -442,7 +458,8 @@ public class ServerModel    {
                             public void run() {
                                 Log.d("s cat loc","no cat");
                                 Toast.makeText(from, "no matched category", Toast.LENGTH_LONG).show();
-                                getItems(from, searchResult, username, pw, location);
+                                getItems(from,ItemInfo,searchResult, username, pw, location,
+                                        type, longitude, latitude, phone,  address);
 
                             }
                         });
@@ -454,18 +471,25 @@ public class ServerModel    {
                         @Override
                         public void onItemClick(AdapterView<?> parent, final View view,
                                                 int position, long id) {
-                            //go to item info
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            in.putExtra("Name", location);
+                            in.putExtra("Type",type);
+                            in.putExtra("Longitude", longitude);
+                            in.putExtra("Latitude", latitude);
+                            in.putExtra("Address", address);
+                            in.putExtra("Phone", phone);
+                            from.startActivity(in);
 
                         }
                     });
-                    /*Intent intent = new Intent(from,success);
-                    intent.putExtra("locations",myResponse);
-                    intent.putExtra("username",username);
-                    intent.putExtra("pw",pw);*/
-                    //from.startActivity(intent);
-
-
-
 
                 }
             }
@@ -473,7 +497,7 @@ public class ServerModel    {
     }
 
 
-    public static void searchItemsByName(final Context from, final ListView searchResult, final String username, final String pw, final String name) {
+    public static void searchItemsByName(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final String name) {
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
                 .add("pw", pw)
@@ -564,25 +588,27 @@ public class ServerModel    {
                         @Override
                         public void onItemClick(AdapterView<?> parent, final View view,
                                                 int position, long id) {
-                            //go to item info
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            from.startActivity(in);
 
                         }
                     });
-                    /*Intent intent = new Intent(from,success);
-                    intent.putExtra("locations",myResponse);
-                    intent.putExtra("username",username);
-                    intent.putExtra("pw",pw);*/
-                    //from.startActivity(intent);
-
-
-
 
                 }
             }
         });
     }
 
-    public static void searchItemsByNameLoc(final Context from, final ListView searchResult, final String username, final String pw, final String name, final String location) {
+    public static void searchItemsByNameLoc(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final String name, final String location,
+                                            final String type, final String longitude, final String latitude, final String phone, final String address) {
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
                 .add("pw", pw)
@@ -599,7 +625,8 @@ public class ServerModel    {
         if (name .equals("")){
             Toast.makeText(from, "null input", Toast.LENGTH_LONG).show();
             searchResult.setAdapter(null);
-            getItems(from, searchResult, username, pw, location);
+            getItems(from,ItemInfo,searchResult, username, pw, location,
+                    type, longitude, latitude, phone,  address);
             return;
         }
         client.newCall(request).enqueue(new Callback() {
@@ -631,7 +658,8 @@ public class ServerModel    {
                         }
                     });
 
-                    getItems(from, searchResult, username, pw, location);
+                    getItems(from,ItemInfo,searchResult, username, pw, location,
+                            type, longitude, latitude, phone,  address);
 
                 }else{
 
@@ -669,7 +697,8 @@ public class ServerModel    {
                             }
                         });
 
-                        getItems(from, searchResult, username, pw, location);
+                        getItems(from,ItemInfo,searchResult, username, pw, location,
+                                type, longitude, latitude, phone,  address);
 
 
 
@@ -679,19 +708,25 @@ public class ServerModel    {
                         @Override
                         public void onItemClick(AdapterView<?> parent, final View view,
                                                 int position, long id) {
-                            //go to item info
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            in.putExtra("Name", location);
+                            in.putExtra("Type",type);
+                            in.putExtra("Longitude", longitude);
+                            in.putExtra("Latitude", latitude);
+                            in.putExtra("Address", address);
+                            in.putExtra("Phone", phone);
+                            from.startActivity(in);
 
                         }
                     });
-                    /*Intent intent = new Intent(from,success);
-                    intent.putExtra("locations",myResponse);
-                    intent.putExtra("username",username);
-                    intent.putExtra("pw",pw);*/
-                    //from.startActivity(intent);
-
-
-
-
                 }
             }
         });
@@ -728,7 +763,7 @@ public class ServerModel    {
                 call.cancel();
                 e.printStackTrace();
                 Log.d("fail add item",e.getMessage());
-                Toast.makeText(from,"fail",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(from,"fail",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -739,7 +774,7 @@ public class ServerModel    {
                 if (myResponse .equals("0")){
                     call.cancel();
                     Log.d("additem success",myResponse);
-                    Toast.makeText(from,"fail",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(from,"fail",Toast.LENGTH_SHORT).show();
                 }else{
 
                     Log.d("additem success",myResponse);

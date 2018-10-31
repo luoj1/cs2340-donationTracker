@@ -120,7 +120,7 @@ public class Locations extends Activity {
             public void onClick(View view) {
                 //do search and create result listview
 
-                ServerModel.searchItemsByName(Locations.this,searchResult, getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"), nameOfItem.getText().toString());
+                ServerModel.searchItemsByName(Locations.this,ItemInfo_Location.class, searchResult, getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"), nameOfItem.getText().toString());
 
 
             }
@@ -153,7 +153,7 @@ public class Locations extends Activity {
             public void onClick(View view) {
                 //do search and create result listview
 
-                ServerModel.searchItemsByCategory(Locations.this,searchResult,
+                ServerModel.searchItemsByCategory(Locations.this,ItemInfo_Location.class,searchResult,
                         getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"),
                         categoryOfItem.getSelectedItem().toString());
 

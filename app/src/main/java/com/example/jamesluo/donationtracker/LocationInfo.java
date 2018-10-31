@@ -3,12 +3,15 @@ package com.example.jamesluo.donationtracker;
 import android.app.Activity;
 
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -41,20 +44,20 @@ public class LocationInfo extends Activity {
         setContentView(R.layout.activity_location_info);
 
 
-        TextView location_name = (TextView) findViewById(R.id.location_name);
-        TextView location_type = (TextView) findViewById(R.id.location_type);
-        TextView longitude = (TextView) findViewById(R.id.longitude);
-        TextView latitude = (TextView) findViewById(R.id.latitude);
-        TextView address = (TextView) findViewById(R.id.location_address);
-        TextView phone = (TextView) findViewById(R.id.location_phone);
+        final TextView location_name = (TextView) findViewById(R.id.location_name);
+        final TextView location_type = (TextView) findViewById(R.id.location_type);
+        final TextView longitude = (TextView) findViewById(R.id.longitude);
+        final TextView latitude = (TextView) findViewById(R.id.latitude);
+        final TextView address = (TextView) findViewById(R.id.location_address);
+        final TextView phone = (TextView) findViewById(R.id.location_phone);
         final String name = "Name: " + getIntent().getStringExtra("Name");
         Log.d("additem","3");
-        String type = "Type: " + getIntent().getStringExtra("Type");
-        String location_longitude = "Longitude: " + getIntent().getStringExtra("Longitude");
-        String location_latitude = "Latitude: " + getIntent().getStringExtra("Latitude");
-        String location_address= "Address: " + getIntent().getStringExtra("Address");
-        String location_phone = "Phone number: " + getIntent().getStringExtra("Phone");
-        String userId = getIntent().getStringExtra("id");
+        final String type = "Type: " + getIntent().getStringExtra("Type");
+        final String location_longitude = "Longitude: " + getIntent().getStringExtra("Longitude");
+        final String location_latitude = "Latitude: " + getIntent().getStringExtra("Latitude");
+        final String location_address= "Address: " + getIntent().getStringExtra("Address");
+        final String location_phone = "Phone number: " + getIntent().getStringExtra("Phone");
+        final String userId = getIntent().getStringExtra("id");
         Log.d("locinfo","4");
         Info info = Model.getInfo().get(userId);
 
@@ -77,7 +80,7 @@ public class LocationInfo extends Activity {
             public void onClick(View view) {
                 Intent i = new Intent(LocationInfo.this, AddItem.class);
                 i.putExtra("username", getIntent().getStringExtra("username"));
-                i.putExtra("Location of Donation",name);
+                i.putExtra("Location of Donation",getIntent().getStringExtra("Name"));
                 i.putExtra("pw", getIntent().getStringExtra("pw"));
                 i.putExtra("Name", getIntent().getStringExtra("Name"));
                 i.putExtra("Type", getIntent().getStringExtra("Type"));
@@ -140,7 +143,9 @@ public class LocationInfo extends Activity {
         searchByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ServerModel.searchItemsByNameLoc(LocationInfo.this, searchResult, getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"), nameOfItem.getText().toString(),name);
+                ServerModel.searchItemsByNameLoc(LocationInfo.this, ItemInfo.class, searchResult, getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"), nameOfItem.getText().toString(),
+                        getIntent().getStringExtra("Name"), getIntent().getStringExtra("Type"), getIntent().getStringExtra("Longitude"), getIntent().getStringExtra("Latitude"),
+                        getIntent().getStringExtra("Phone"), getIntent().getStringExtra("Address"));
 
 
             }
@@ -153,13 +158,15 @@ public class LocationInfo extends Activity {
         searchByCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ServerModel.searchItemsByCategoryLoc(LocationInfo.this,searchResult,
+                ServerModel.searchItemsByCategoryLoc(LocationInfo.this,ItemInfo.class, searchResult,
                         getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"),
-                        categoryOfItem.getSelectedItem().toString(),name);
+                        categoryOfItem.getSelectedItem().toString(),getIntent().getStringExtra("Name"), getIntent().getStringExtra("Type"), getIntent().getStringExtra("Longitude"), getIntent().getStringExtra("Latitude"),
+                        getIntent().getStringExtra("Phone"), getIntent().getStringExtra("Address"));
             }
         });
-        Toast.makeText(this, "check items in " + name, Toast.LENGTH_LONG).show();
-        ServerModel.getItems(LocationInfo.this,searchResult,getIntent().getStringExtra("username"),getIntent().getStringExtra("pw"), name);
+        ServerModel.getItems(LocationInfo.this, ItemInfo.class, searchResult, getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"),
+                getIntent().getStringExtra("Name"), getIntent().getStringExtra("Type"), getIntent().getStringExtra("Longitude"), getIntent().getStringExtra("Latitude"),
+                getIntent().getStringExtra("Phone"), getIntent().getStringExtra("Address"));
         /*final ListView searchResult = (ListView) findViewById(R.id.searchResult);
         int tracker =0 ;
         for (Location l : Model.getLocations()) {
@@ -180,6 +187,8 @@ public class LocationInfo extends Activity {
 
             }
         });*/
+
+
     }
     @Override
     public void onBackPressed(){
@@ -195,4 +204,5 @@ public class LocationInfo extends Activity {
         in.putExtra("Phone", getIntent().getStringExtra("Phone"));
         startActivity(in);
     }
+
 }

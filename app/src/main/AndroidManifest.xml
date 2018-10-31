@@ -38,6 +38,9 @@
             android:name=".AddItem"
             android:label="@string/add_item" />
         <activity
+            android:name=".ItemInfo_Location"
+            android:label="Item Details from Locations" />
+        <activity
             android:name=".ItemInfo"
             android:label="Item Details" />
         <activity

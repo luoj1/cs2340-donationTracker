@@ -85,7 +85,7 @@
             android:layout_width="437dp"
             android:layout_height="374dp" />
 
-        <fragment android:name="com.example.jamesluo.ItemFragment"
+        <FrameLayout
             android:id="@+id/viewer"
             android:layout_weight="2"
             android:layout_width="0dp"
