@@ -37,6 +37,14 @@ public class Locations extends Activity {
         String website;
         String zip;
     }
+    private class SingleItem{
+        String ItemName;
+        String FullDescription;
+        String Category;
+        String Value;
+        String TimeStamp;
+        String Location;
+    }
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_location);
@@ -106,6 +114,10 @@ public class Locations extends Activity {
                 }
             });
         }
+
+        final ArrayList<SingleItem> items_list = new ArrayList<>();
+        final String[] items_displays =  new String[1];
+
         EditText nameOfItem = (EditText) findViewById(R.id.searchName);
         String searchName = nameOfItem.toString();
         Button searchByName = (Button) findViewById(R.id.searchByName);
@@ -113,6 +125,7 @@ public class Locations extends Activity {
             @Override
             public void onClick(View view) {
                 //do search and create result listview
+
             }
         });
         Spinner categoryOfItem = (Spinner) findViewById(R.id.searchCategory);
@@ -124,6 +137,29 @@ public class Locations extends Activity {
             @Override
             public void onClick(View view) {
                 //do search and create result listview
+            }
+        });
+
+
+
+        final ListView searchResult = (ListView) findViewById(R.id.searchResult);
+        int tracker =0 ;
+        for (Location l : Model.getLocations()) {
+            items_displays[tracker] = Model.getLocations().get(tracker).getLocation().get("Name");
+            tracker ++ ;
+        }
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, items_displays);
+        searchResult.setAdapter(adapter2);
+
+        searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                //go to item info
+
+
             }
         });
     }

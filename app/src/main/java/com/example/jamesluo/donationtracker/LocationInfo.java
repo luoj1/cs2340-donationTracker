@@ -154,9 +154,26 @@ public class LocationInfo extends Activity {
             }
         });
 
+        final ListView searchResult = (ListView) findViewById(R.id.searchResult);
+        int tracker =0 ;
+        for (Location l : Model.getLocations()) {
+            items_displays[tracker] = Model.getLocations().get(tracker).getLocation().get("Name");
+            tracker ++ ;
+        }
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, items_displays);
+        searchResult.setAdapter(adapter2);
+
+        searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                //go to item info
 
 
-
+            }
+        });
 
     }
     @Override
@@ -172,5 +189,4 @@ public class LocationInfo extends Activity {
         in.putExtra("Phone", getIntent().getStringExtra("Phone"));
         startActivity(in);
     }
-
 }

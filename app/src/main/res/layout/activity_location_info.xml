@@ -82,4 +82,9 @@
         android:layout_height="48dp"
         android:paddingTop="15dp"
         android:text="Search by Category" />
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/searchResult"
+        android:layout_width="437dp"
+        android:layout_height="374dp" />
+
 </LinearLayout>
