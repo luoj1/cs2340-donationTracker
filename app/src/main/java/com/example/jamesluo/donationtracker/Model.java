@@ -42,6 +42,7 @@ public class Model {
     public static List<Location> getLocations(){
         return locations;
     }
+    public static HashMap<String, String> getAuth() {return auth;}
     public static void setItems(String s, Item it) {
         if(items.containsKey(s)){
             items.get(s).add(it);
