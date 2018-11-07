@@ -152,7 +152,9 @@ public class Login extends AppCompatActivity implements LoaderCallbacks<Cursor> 
         if (mAuthTask != null) {
             return false;
         }
-
+        if(mEmailView.getText().toString().equals("")|| mPasswordView.getText().toString().equals("")) {
+            return false;
+        }
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);

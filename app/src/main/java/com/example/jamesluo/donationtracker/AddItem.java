@@ -40,7 +40,8 @@ public class AddItem extends Activity {
             public void onClick(View view) {
 
                 Intent i = new Intent(AddItem.this, LocationInfo.class);
-                i.putExtra("id", getIntent().getStringExtra("id"));
+                i.putExtra("username", getIntent().getStringExtra("username"));
+                i.putExtra("pw",getIntent().getStringExtra("pw"));
                 i.putExtra("Name", getIntent().getStringExtra("Name"));
                 i.putExtra("Type", getIntent().getStringExtra("Type"));
                 i.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
@@ -48,11 +49,12 @@ public class AddItem extends Activity {
                 i.putExtra("Address", getIntent().getStringExtra("Address"));
                 i.putExtra("Phone", getIntent().getStringExtra("Phone"));
                 Log.d("additem","2");
+                String item_location = locationOfDonation;
                 String item_timestamp = timestamp.getText().toString();
                 String item_name = itemName.getText().toString();
                 String item_full = fullDescription.getText().toString();
                 String item_value = value.getText().toString();
-                String item_category = category.toString();
+                String item_category = category.getSelectedItem().toString();
                 Map<String,String> item = new HashMap<>();
                 item.put("location",locationOfDonation);
                 item.put("timestamp",item_timestamp);
@@ -62,7 +64,15 @@ public class AddItem extends Activity {
                 item.put("category",item_category);
                 final Item newItem = new Item(item);
                 Log.d("additem","3");
-                Model.setItems(locationOfDonation, newItem);
+                //Model.setItems(locationOfDonation, newItem);
+                ServerModel.addItems(AddItem.this, Locations.class, AddItem.class
+                        , item_category
+                        ,item_name
+                        ,item_full
+                        ,item_timestamp
+                        ,item_value
+                        ,item_location
+                        ,getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"));
                 Log.d("additem","4");
                 startActivity(i);
             }
@@ -72,8 +82,8 @@ public class AddItem extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(AddItem.this, LocationInfo.class);
-                i.putExtra("id", getIntent().getStringExtra("id"));
-
+                i.putExtra("username", getIntent().getStringExtra("username"));
+                i.putExtra("pw",getIntent().getStringExtra("pw"));
                 i.putExtra("Name", getIntent().getStringExtra("Name"));
                 i.putExtra("Type", getIntent().getStringExtra("Type"));
                 i.putExtra("Longitude", getIntent().getStringExtra("Longitude"));

@@ -3,22 +3,17 @@ package com.example.jamesluo.donationtracker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 /**
  * Created by jamesluo on 10/23/18.
  */
 
-public class ItemInfo extends Activity {
+public class ItemInfo_Location extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_info);
+        setContentView(R.layout.activity_item_info_location);
         TextView location_name = (TextView) findViewById(R.id.item_location);
         TextView value = (TextView) findViewById(R.id.item_value);
         TextView category = (TextView) findViewById(R.id.item_category);
@@ -42,15 +37,9 @@ public class ItemInfo extends Activity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        Intent in=new Intent(ItemInfo.this, LocationInfo.class);
+        Intent in=new Intent(ItemInfo_Location.this, Locations.class);
         in.putExtra("username", getIntent().getStringExtra("username"));
         in.putExtra("pw", getIntent().getStringExtra("pw"));
-        in.putExtra("Name", getIntent().getStringExtra("Name"));
-        in.putExtra("Type", getIntent().getStringExtra("Type"));
-        in.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
-        in.putExtra("Latitude", getIntent().getStringExtra("Latitude"));
-        in.putExtra("Address", getIntent().getStringExtra("Address"));
-        in.putExtra("Phone", getIntent().getStringExtra("Phone"));
         startActivity(in);
     }
 }
