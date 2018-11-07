@@ -1,10 +1,16 @@
 package com.example.jamesluo.donationtracker;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 /**
@@ -28,6 +34,14 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 public class ServerModel    {
+    private static class SingleItem{
+        String ItemName;
+        String FullDescription;
+        String Category;
+        String Value;
+        String TimeStamp;
+        String Location;
+    }
    private final static String url = "http://10.0.2.2:8080";
    private static OkHttpClient client;
    public static void initClient() {
@@ -144,4 +158,721 @@ public class ServerModel    {
             });
     }
 
+    public static void getItems(final Context from,final Class ItemInfo, final ListView searchResult, final String username, final String pw, final String location,
+                                final String type, final String longitude, final String latitude, final String phone, final String address) {
+        RequestBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("pw", pw)
+                .add("location", location)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url+"/getItems")
+                //.addHeader("Accept", "application/json")
+                .header("Connection","close")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                e.printStackTrace();
+                Log.d("fail get location",e.getMessage());
+
+                //Toast.makeText(from, "fail in creatring account", Toast.LENGTH_LONG).show();
+                //Toast.makeText(from, "db issue", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //call.cancel();
+                final String myResponse = response.body().string();
+                Log.d("getitems response", myResponse);
+                if (myResponse .equals("0")){
+                    call.cancel();
+                    Log.d("0 in items",myResponse);
+                    ((Activity)from).runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            Toast.makeText(from, "empty", Toast.LENGTH_LONG).show();
+                            searchResult.setAdapter(null);
+
+                        }
+                    });
+
+                }else{
+
+                    Log.d("success in items",myResponse);
+
+                    final ArrayList<SingleItem> items_list = itemBuilder(myResponse);
+                    if (items_list == null) return;
+                    final String[] items_displays = new String[items_list.size()];
+                    int tracker = 0;
+                    for (SingleItem item : items_list) {
+                        items_displays[tracker] = item.ItemName;
+                        tracker++;
+                    }
+                    Log.d("item display len", ""+items_displays.length );
+                    if (items_displays.length > 0 ) {
+                        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(from,
+                                android.R.layout.simple_list_item_1, items_displays);
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                searchResult.setAdapter(adapter2);
+
+                            }
+                        });
+
+                    }else{
+                        //search all
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Toast.makeText(from, "empty", Toast.LENGTH_LONG).show();
+                                searchResult.setAdapter(null);
+
+                            }
+                        });
+
+                    }
+                    searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, final View view,
+                                                int position, long id) {
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            in.putExtra("Name", location);
+                            in.putExtra("Type",type);
+                            in.putExtra("Longitude", longitude);
+                            in.putExtra("Latitude", latitude);
+                            in.putExtra("Address", address);
+                            in.putExtra("Phone", phone);
+                            from.startActivity(in);
+
+                        }
+                    });
+
+
+                }
+            }
+        });
+    }
+    public static void searchItemsByCategory(final Context from, final Class ItemInfo,final ListView searchResult, final String username, final String pw, final  String category) {
+        RequestBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("pw", pw)
+                .add("category", category)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url+"/searchItemByCategory")
+                //.addHeader("Accept", "application/json")
+                .header("Connection","close")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                e.printStackTrace();
+                Log.d("fail get location",e.getMessage());
+
+                //Toast.makeText(from, "fail in creatring account", Toast.LENGTH_LONG).show();
+                //Toast.makeText(from, "db issue", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //call.cancel();
+                final String myResponse = response.body().string();
+                Log.d("getlocation response", myResponse);
+                if (myResponse .equals("0")){
+                    call.cancel();
+                    Log.d("success",myResponse);
+                    ((Activity)from).runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            Log.d("s cat","no cat");
+                            Toast.makeText(from, "no category matched", Toast.LENGTH_LONG).show();
+                            searchResult.setAdapter(null);
+
+                        }
+                    });
+                }else{
+
+                    Log.d("success",myResponse);
+
+                    final ArrayList<SingleItem> items_list = itemBuilder(myResponse);
+                    if (items_list == null) return;
+                    final String[] items_displays = new String[items_list.size()];
+                    int tracker = 0;
+                    for (SingleItem item : items_list) {
+                        items_displays[tracker] = item.ItemName;
+                        tracker++;
+                    }
+                    if (items_displays.length > 0 ) {
+                        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(from,
+                                android.R.layout.simple_list_item_1, items_displays);
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                searchResult.setAdapter(adapter2);
+
+                            }
+                        });
+
+                    }else{
+                        //search all
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Log.d("s cat","no cat");
+                                Toast.makeText(from, "no category matched", Toast.LENGTH_LONG).show();
+                                searchResult.setAdapter(null);
+
+                            }
+                        });
+
+                    }
+                    searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, final View view,
+                                                int position, long id) {
+                            //go to item info
+                            Log.d("clicked cat", items_list.get(position).ItemName);
+
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            from.startActivity(in);
+                        }
+                    });
+
+
+
+
+
+                }
+            }
+        });
+    }
+
+    public static void searchItemsByCategoryLoc(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final  String category, final String location,
+                                                final String type, final String longitude, final String latitude, final String phone, final String address) {
+        RequestBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("pw", pw)
+                .add("category", category)
+                .add("location", location)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url+"/searchItemByCategoryLoc")
+                //.addHeader("Accept", "application/json")
+                .header("Connection","close")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                e.printStackTrace();
+                Log.d("fail get location",e.getMessage());
+
+                //Toast.makeText(from, "fail in creatring account", Toast.LENGTH_LONG).show();
+                //Toast.makeText(from, "db issue", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //call.cancel();
+                final String myResponse = response.body().string();
+                Log.d("getlocation response", myResponse);
+                if (myResponse .equals("0")){
+                    call.cancel();
+                    Log.d("success",myResponse);
+                    ((Activity)from).runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            Log.d("s cat loc","no cat");
+                            Toast.makeText(from, "no matched category", Toast.LENGTH_LONG).show();
+                            getItems(from,ItemInfo,searchResult, username, pw, location,
+                            type, longitude, latitude, phone,  address);
+
+                        }
+                    });
+                }else{
+
+                    Log.d("success",myResponse);
+
+                    final ArrayList<SingleItem> items_list = itemBuilder(myResponse);
+                    if (items_list == null) return;
+                    final String[] items_displays = new String[items_list.size()];
+                    int tracker = 0;
+                    for (SingleItem item : items_list) {
+                        items_displays[tracker] = item.ItemName;
+                        tracker++;
+                    }
+                    if (items_displays.length > 0 ) {
+                        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(from,
+                                android.R.layout.simple_list_item_1, items_displays);
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                searchResult.setAdapter(adapter2);
+
+                            }
+                        });
+
+                    }else{
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Log.d("s cat loc","no cat");
+                                Toast.makeText(from, "no matched category", Toast.LENGTH_LONG).show();
+                                getItems(from,ItemInfo,searchResult, username, pw, location,
+                                        type, longitude, latitude, phone,  address);
+
+                            }
+                        });
+
+
+                    }
+                    searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, final View view,
+                                                int position, long id) {
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            in.putExtra("Name", location);
+                            in.putExtra("Type",type);
+                            in.putExtra("Longitude", longitude);
+                            in.putExtra("Latitude", latitude);
+                            in.putExtra("Address", address);
+                            in.putExtra("Phone", phone);
+                            from.startActivity(in);
+
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
+
+    public static void searchItemsByName(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final String name) {
+        RequestBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("pw", pw)
+                .add("name", name)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url+"/searchItemByName")
+                //.addHeader("Accept", "application/json")
+                .header("Connection","close")
+                .post(body)
+                .build();
+        if (name .equals("")){
+            Toast.makeText(from, "null input", Toast.LENGTH_LONG).show();
+            searchResult.setAdapter(null);
+            return;
+        }
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                e.printStackTrace();
+                Log.d("fail get location",e.getMessage());
+
+                //Toast.makeText(from, "fail in creatring account", Toast.LENGTH_LONG).show();
+                //Toast.makeText(from, "db issue", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //call.cancel();
+                final String myResponse = response.body().string();
+                Log.d("getlocation response", myResponse);
+                if (myResponse .equals("0")){
+                    call.cancel();
+                    Log.d("success",myResponse);
+
+                    ((Activity)from).runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            Log.d("s name","no name");
+                            Toast.makeText(from, "no name matched", Toast.LENGTH_LONG).show();
+                            searchResult.setAdapter(null);
+
+                        }
+                    });
+                }else{
+
+                    Log.d("success",myResponse);
+
+                    final ArrayList<SingleItem> items_list = itemBuilder(myResponse);
+                    if (items_list == null) return;
+                    final String[] items_displays = new String[items_list.size()];
+                    int tracker = 0;
+                    for (SingleItem item : items_list) {
+                        items_displays[tracker] = item.ItemName;
+                        tracker++;
+                    }
+                    if (items_displays.length > 0 ) {
+                        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(from,
+                                android.R.layout.simple_list_item_1, items_displays);
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                searchResult.setAdapter(adapter2);
+
+                            }
+                        });
+
+                    }else{
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                Log.d("s name","no name");
+                                Toast.makeText(from, "no name matched", Toast.LENGTH_LONG).show();
+                                searchResult.setAdapter(null);
+
+                            }
+                        });
+
+                    }
+                    searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, final View view,
+                                                int position, long id) {
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            from.startActivity(in);
+
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
+    public static void searchItemsByNameLoc(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final String name, final String location,
+                                            final String type, final String longitude, final String latitude, final String phone, final String address) {
+        RequestBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("pw", pw)
+                .add("name", name)
+                .add("location", location)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url+"/searchItemByNameLoc")
+                //.addHeader("Accept", "application/json")
+                .header("Connection","close")
+                .post(body)
+                .build();
+        if (name .equals("")){
+            Toast.makeText(from, "null input", Toast.LENGTH_LONG).show();
+            searchResult.setAdapter(null);
+            getItems(from,ItemInfo,searchResult, username, pw, location,
+                    type, longitude, latitude, phone,  address);
+            return;
+        }
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                e.printStackTrace();
+                Log.d("fail get location",e.getMessage());
+
+                //Toast.makeText(from, "fail in creatring account", Toast.LENGTH_LONG).show();
+                //Toast.makeText(from, "db issue", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //call.cancel();
+                final String myResponse = response.body().string();
+                Log.d("getlocation response", myResponse);
+                if (myResponse .equals("0") ){
+                    call.cancel();
+                    Log.d("success",myResponse);
+                    ((Activity)from).runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                            Toast.makeText(from, "no matched name", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+                    getItems(from,ItemInfo,searchResult, username, pw, location,
+                            type, longitude, latitude, phone,  address);
+
+                }else{
+
+                    Log.d("success",myResponse);
+
+                    final ArrayList<SingleItem> items_list = itemBuilder(myResponse);
+                    if (items_list == null) return;
+                    final String[] items_displays = new String[items_list.size()];
+                    int tracker = 0;
+                    for (SingleItem item : items_list) {
+                        items_displays[tracker] = item.ItemName;
+                        tracker++;
+                    }
+                    if (items_displays.length > 0 ) {
+                        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(from,
+                                android.R.layout.simple_list_item_1, items_displays);
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                searchResult.setAdapter(adapter2);
+
+                            }
+                        });
+
+                    }else{
+                        ((Activity)from).runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+
+                                Toast.makeText(from, "no matched category", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
+                        getItems(from,ItemInfo,searchResult, username, pw, location,
+                                type, longitude, latitude, phone,  address);
+
+
+
+                    }
+                    searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, final View view,
+                                                int position, long id) {
+                            Intent in = new Intent(from,ItemInfo);
+                            in.putExtra("Location", items_list.get(position).Location);
+                            in.putExtra("Timestamp", items_list.get(position).TimeStamp);
+                            in.putExtra("ItemName", items_list.get(position).ItemName);
+                            in.putExtra("FullDescription", items_list.get(position).FullDescription);
+                            in.putExtra("Value", items_list.get(position).Value);
+                            in.putExtra("Category", items_list.get(position).Category);
+                            in.putExtra("username",username);
+                            in.putExtra("pw",pw);
+                            in.putExtra("Name", location);
+                            in.putExtra("Type",type);
+                            in.putExtra("Longitude", longitude);
+                            in.putExtra("Latitude", latitude);
+                            in.putExtra("Address", address);
+                            in.putExtra("Phone", phone);
+                            from.startActivity(in);
+
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public static void addItems(final Context from, final Class success, final Class fail
+                                , final String category
+                                , final String name
+                                , final String full
+                                , final String timestamp
+                                , final String value
+                                ,final String location
+                                ,final String username, final String pw) {
+        RequestBody body = new FormBody.Builder()
+                //.add("username", username)
+                //.add("pw", pw)
+                .add("location", location)
+                .add("timestamp", timestamp)
+                .add("name", name)
+                .add("fulldescription", full)
+                .add("value", value)
+                .add("category", category)
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url+"/addItem")
+                //.addHeader("Accept", "application/json")
+                .header("Connection","close")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                e.printStackTrace();
+                Log.d("fail add item",e.getMessage());
+                //Toast.makeText(from,"fail",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //call.cancel();
+                final String myResponse = response.body().string();
+                Log.d("additem response", myResponse);
+                if (myResponse .equals("0")){
+                    call.cancel();
+                    Log.d("additem success",myResponse);
+                    //Toast.makeText(from,"fail",Toast.LENGTH_SHORT).show();
+                }else{
+
+                    Log.d("additem success",myResponse);
+
+
+                    Intent intent = new Intent(from,success);
+
+                    intent.putExtra("username",username);
+                    intent.putExtra("pw",pw);
+
+                    from.startActivity(intent);
+
+
+
+
+                }
+            }
+        });
+    }
+    public static void buttonVisibility (final Button b, final String username, final String pw) {
+        RequestBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("pw", pw)
+
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url+"/userType")
+                //.addHeader("Accept", "application/json")
+                .header("Connection","close")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+                e.printStackTrace();
+                Log.d("fail get user type",e.getMessage());
+
+                //Toast.makeText(from, "fail in creatring account", Toast.LENGTH_LONG).show();
+                //Toast.makeText(from, "db issue", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //call.cancel();
+                final String myResponse = response.body().string();
+                Log.d("getusertype response", myResponse);
+                if (myResponse .equals("0")){
+                    call.cancel();
+                    Log.d("success",myResponse);
+
+                }else{
+
+                    Log.d("success",myResponse);
+
+                        if (myResponse.equals("Location Employee")){
+                            b.setVisibility(View.VISIBLE);
+                            Log.d("setbutton",myResponse);
+                        }
+                    Log.d("no setbutton",myResponse);
+                    /*Intent intent = new Intent(from,success);
+                    intent.putExtra("locations",myResponse);
+                    intent.putExtra("username",username);
+                    intent.putExtra("pw",pw);*/
+                    //from.startActivity(intent);
+
+
+
+
+                }
+            }
+        });
+
+    }
+    public static ArrayList<SingleItem> itemBuilder(String raw){
+        JSONArray jsonArray;
+        final ArrayList<SingleItem> list = new ArrayList<>();
+        String[] values = new String[1];
+        if (raw.equals(null) || raw.equals("")) return list;
+        try{
+            jsonArray = new JSONArray(raw);
+            values  = new String[jsonArray.length()];
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonobject = jsonArray.getJSONObject(i);
+                SingleItem sl = new SingleItem();
+                sl.ItemName = jsonobject.getString("name");
+                sl.Category = jsonobject.getString("category");
+                sl.FullDescription = jsonobject.getString("fulldescription");
+                sl.Location = jsonobject.getString("location");
+                sl.TimeStamp = jsonobject.getString("timestamp");
+                sl.Value = jsonobject.getString("value");
+                list.add(sl);
+            }
+            return list;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

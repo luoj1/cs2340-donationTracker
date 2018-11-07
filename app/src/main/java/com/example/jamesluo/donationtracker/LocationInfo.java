@@ -3,12 +3,15 @@ package com.example.jamesluo.donationtracker;
 import android.app.Activity;
 
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,42 +22,52 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 /**
  * Created by jamesluo on 10/10/18.
  */
 
 public class LocationInfo extends Activity {
+    private class SingleItem{
+        String ItemName;
+        String FullDescription;
+        String Category;
+        String Value;
+        String TimeStamp;
+        String Location;
+    }
+    public static String location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_info);
 
 
-
-        TextView location_name = (TextView) findViewById(R.id.location_name);
-        TextView location_type = (TextView) findViewById(R.id.location_type);
-        TextView longitude = (TextView) findViewById(R.id.longitude);
-        TextView latitude = (TextView) findViewById(R.id.latitude);
-        TextView address = (TextView) findViewById(R.id.location_address);
-        TextView phone = (TextView) findViewById(R.id.location_phone);
+        final TextView location_name = (TextView) findViewById(R.id.location_name);
+        final TextView location_type = (TextView) findViewById(R.id.location_type);
+        final TextView longitude = (TextView) findViewById(R.id.longitude);
+        final TextView latitude = (TextView) findViewById(R.id.latitude);
+        final TextView address = (TextView) findViewById(R.id.location_address);
+        final TextView phone = (TextView) findViewById(R.id.location_phone);
         final String name = "Name: " + getIntent().getStringExtra("Name");
         Log.d("additem","3");
-        String type = "Type: " + getIntent().getStringExtra("Type");
-        String location_longitude = "Longitude: " + getIntent().getStringExtra("Longitude");
-        String location_latitude = "Latitude: " + getIntent().getStringExtra("Latitude");
-        String location_address= "Address: " + getIntent().getStringExtra("Address");
-        String location_phone = "Phone number: " + getIntent().getStringExtra("Phone");
-        String userId = getIntent().getStringExtra("id");
+        final String type = "Type: " + getIntent().getStringExtra("Type");
+        final String location_longitude = "Longitude: " + getIntent().getStringExtra("Longitude");
+        final String location_latitude = "Latitude: " + getIntent().getStringExtra("Latitude");
+        final String location_address= "Address: " + getIntent().getStringExtra("Address");
+        final String location_phone = "Phone number: " + getIntent().getStringExtra("Phone");
+        final String userId = getIntent().getStringExtra("id");
         Log.d("locinfo","4");
         Info info = Model.getInfo().get(userId);
 
         Button addItem = (Button) findViewById(R.id.add_item);
-        if(info.type .equals("Location Employee")) {
-            //set add button visible
-            addItem.setVisibility(View.VISIBLE);
-        }else{
-            addItem.setVisibility(View.INVISIBLE);
-        }
+        addItem.setVisibility(View.INVISIBLE);
+
+        ServerModel.buttonVisibility(addItem
+                ,getIntent().getStringExtra("username")
+                ,getIntent().getStringExtra("pw"));
+
         location_name.setText(name);
         location_type.setText(type);
         longitude.setText(location_longitude);
@@ -66,9 +79,9 @@ public class LocationInfo extends Activity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LocationInfo.this, AddItem.class);
-                i.putExtra("id", getIntent().getStringExtra("id"));
-                i.putExtra("Location of Donation",name);
-                //i.putExtra("id", getIntent().getStringExtra("id"));
+                i.putExtra("username", getIntent().getStringExtra("username"));
+                i.putExtra("Location of Donation",getIntent().getStringExtra("Name"));
+                i.putExtra("pw", getIntent().getStringExtra("pw"));
                 i.putExtra("Name", getIntent().getStringExtra("Name"));
                 i.putExtra("Type", getIntent().getStringExtra("Type"));
                 i.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
@@ -79,7 +92,7 @@ public class LocationInfo extends Activity {
             }
         });
         Log.d("beginresolve itemview","");
-        final ListView listview = (ListView) findViewById(R.id.itemlist);
+        /*final ListView listview = (ListView) findViewById(R.id.itemlist);
         if (Model.getItems(name) != null) {
             String[] values = new String[Model.getItems(name).size()];
             int tracker =0;
@@ -105,7 +118,8 @@ public class LocationInfo extends Activity {
                 in.putExtra("FullDescription", Model.getItems(name).get(position).getItem().get("fullDescription"));
                 in.putExtra("Value", Model.getItems(name).get(position).getItem().get("value"));
                 in.putExtra("Category", Model.getItems(name).get(position).getItem().get("category"));
-                in.putExtra("id", getIntent().getStringExtra("id"));
+                in.putExtra("username", getIntent().getStringExtra("username"));
+                in.putExtra("pw", getIntent().getStringExtra("pw"));
                 in.putExtra("Name", getIntent().getStringExtra("Name"));
                 in.putExtra("Type", getIntent().getStringExtra("Type"));
                 in.putExtra("Longitude", getIntent().getStringExtra("Longitude"));
@@ -114,17 +128,29 @@ public class LocationInfo extends Activity {
                 in.putExtra("Phone", getIntent().getStringExtra("Phone"));
                 startActivity(in);
             }
-        });
-        EditText nameOfItem = (EditText) findViewById(R.id.search_name);
+        });*/
+
+        final ListView searchResult = (ListView) findViewById(R.id.searchResult);
+        final EditText nameOfItem = (EditText) findViewById(R.id.searchName);
         String searchName = nameOfItem.toString();
         Button searchByName = (Button) findViewById(R.id.searchByName);
+
+
+        final ArrayList<SingleItem> items_list = new ArrayList<>();
+        final String[] items_displays =  new String[1];
+
+
         searchByName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //do search and create result listview
+                ServerModel.searchItemsByNameLoc(LocationInfo.this, ItemInfo.class, searchResult, getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"), nameOfItem.getText().toString(),
+                        getIntent().getStringExtra("Name"), getIntent().getStringExtra("Type"), getIntent().getStringExtra("Longitude"), getIntent().getStringExtra("Latitude"),
+                        getIntent().getStringExtra("Phone"), getIntent().getStringExtra("Address"));
+
+
             }
         });
-        Spinner categoryOfItem = (Spinner) findViewById(R.id.searchCategory);
+        final Spinner categoryOfItem = (Spinner) findViewById(R.id.searchCategory);
         ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Category.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryOfItem.setAdapter(adapter);
@@ -132,15 +158,44 @@ public class LocationInfo extends Activity {
         searchByCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //do search and create result listview
+                ServerModel.searchItemsByCategoryLoc(LocationInfo.this,ItemInfo.class, searchResult,
+                        getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"),
+                        categoryOfItem.getSelectedItem().toString(),getIntent().getStringExtra("Name"), getIntent().getStringExtra("Type"), getIntent().getStringExtra("Longitude"), getIntent().getStringExtra("Latitude"),
+                        getIntent().getStringExtra("Phone"), getIntent().getStringExtra("Address"));
             }
         });
+        ServerModel.getItems(LocationInfo.this, ItemInfo.class, searchResult, getIntent().getStringExtra("username"), getIntent().getStringExtra("pw"),
+                getIntent().getStringExtra("Name"), getIntent().getStringExtra("Type"), getIntent().getStringExtra("Longitude"), getIntent().getStringExtra("Latitude"),
+                getIntent().getStringExtra("Phone"), getIntent().getStringExtra("Address"));
+        /*final ListView searchResult = (ListView) findViewById(R.id.searchResult);
+        int tracker =0 ;
+        for (Location l : Model.getLocations()) {
+            items_displays[tracker] = Model.getLocations().get(tracker).getLocation().get("Name");
+            tracker ++ ;
+        }
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, items_displays);
+        searchResult.setAdapter(adapter2);
+
+        searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                //go to item info
+
+
+            }
+        });*/
+
+
     }
     @Override
     public void onBackPressed(){
         super.onBackPressed();
         Intent in=new Intent(LocationInfo.this, Locations.class);
-        in.putExtra("id", getIntent().getStringExtra("id"));
+        in.putExtra("pw", getIntent().getStringExtra("pw"));
+        in.putExtra("username", getIntent().getStringExtra("username"));
         in.putExtra("Name", getIntent().getStringExtra("Name"));
         in.putExtra("Type", getIntent().getStringExtra("Type"));
         in.putExtra("Longitude", getIntent().getStringExtra("Longitude"));

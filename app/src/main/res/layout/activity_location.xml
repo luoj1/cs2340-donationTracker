@@ -1,45 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    android:orientation="vertical" >
-
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/listview"
-        android:layout_width="437dp"
-        android:layout_height="374dp" />
-    <EditText
-        android:id="@+id/searchName"
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:maxLines="4"
-        android:singleLine="true"
-        android:hint="Name of items"/>
-    <Button
-        android:id="@+id/searchByName"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:paddingTop="15dp"
-        android:text="Search by Name" />
+        android:layout_height="match_parent"
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Category of items"
-        android:textSize="18sp" />
+        android:orientation="vertical" >
 
-    <Spinner
-        android:id="@+id/searchCategory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/searchByCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:paddingTop="15dp"
-        android:text="Search by Category" />
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/listview"
+            android:layout_width="437dp"
+            android:layout_height="374dp" />
+        <EditText
+            android:id="@+id/searchName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="4"
+            android:singleLine="true"
+            android:hint="Name of items"/>
+        <Button
+            android:id="@+id/searchByName"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:paddingTop="15dp"
+            android:text="Search by Name" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category of items"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/searchCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/searchByCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:paddingTop="15dp"
+            android:text="Search by Category" />
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/searchResult"
+            android:layout_width="437dp"
+            android:layout_height="374dp" />
+
+    </LinearLayout>
+</ScrollView>
