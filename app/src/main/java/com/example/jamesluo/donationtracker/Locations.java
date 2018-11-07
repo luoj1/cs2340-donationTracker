@@ -143,7 +143,6 @@ public class Locations extends Activity {
                                     int position, long id) {
                 //go to item info
 
-
             }
         });
     }
