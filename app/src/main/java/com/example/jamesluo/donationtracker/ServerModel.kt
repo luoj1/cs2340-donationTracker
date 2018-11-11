@@ -16,7 +16,7 @@ import java.io.IOException
 import java.util.*
 
 object ServerModel {
-    private const val url = "http://10.0.2.2:8080"
+    private const val url = "http://162.243.172.39:8080/"
     private var client: OkHttpClient? = null
 
     class SingleItem {
