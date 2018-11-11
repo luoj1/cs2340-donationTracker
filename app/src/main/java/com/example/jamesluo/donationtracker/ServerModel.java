@@ -59,7 +59,7 @@ public class ServerModel    {
         String TimeStamp;
         String Location;
     }
-   private final static String url = "http://10.0.2.2:8080";
+   private final static String url = "http://162.243.172.39:8080";
    private static OkHttpClient client;
    public static void initClient() {
        client = new OkHttpClient.Builder().retryOnConnectionFailure(true).build();
