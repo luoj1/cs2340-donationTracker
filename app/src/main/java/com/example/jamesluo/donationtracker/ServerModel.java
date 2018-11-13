@@ -518,15 +518,25 @@ public class ServerModel    {
             }
         });
     }
-
-    public static void searchItemsByCategoryLoc(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final  String category, final String location,
-                                                final String type, final String longitude, final String latitude, final String phone, final String address) {
+    private static RequestBody resquestBuilder(final String username, final String pw, final String category, final String location){
+        if (username == null || pw == null || category == null || location == null) {
+            throw new IllegalArgumentException("null input");
+        }
+        if (pw.contains(" ") || pw.contains(";") || pw.contains("(") || pw.contains(")")) {
+            throw new IllegalArgumentException("illegal password");
+        }
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
                 .add("pw", pw)
                 .add("category", category)
                 .add("location", location)
                 .build();
+        return body;
+    }
+
+    public static void searchItemsByCategoryLoc(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final  String category, final String location,
+                                                final String type, final String longitude, final String latitude, final String phone, final String address) {
+        RequestBody body = resquestBuilder(username, pw, category, location);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url+"/searchItemByCategoryLoc")
@@ -988,7 +998,11 @@ public class ServerModel    {
         });
 
     }
+
     public static ArrayList<SingleItem> itemBuilder(String raw){
+        if (raw == null) {
+
+        }
         JSONArray jsonArray;
         final ArrayList<SingleItem> list = new ArrayList<>();
         String[] values = new String[1];

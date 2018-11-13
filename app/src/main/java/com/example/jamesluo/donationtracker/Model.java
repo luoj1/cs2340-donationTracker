@@ -42,6 +42,7 @@ public class Model {
     public static List<Location> getLocations(){
         return locations;
     }
+
     public static void setItems(String s, Item it) {
         if(items.containsKey(s)){
             items.get(s).add(it);
@@ -80,6 +81,7 @@ public class Model {
     public static boolean contains(String u) {
         return auth.containsKey(u);
     }
+
     public static void addUser(String user, String pwd,String type, String id) {
         //email as id
         auth.put(id,pwd);
