@@ -27,12 +27,11 @@
         android:layout_height="50dp"
         android:paddingTop="15dp"
         android:text="register" />
-
     <Button
-        android:id="@+id/location"
+        android:id="@+id/mapButton"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:paddingTop="15dp"
-        android:text="location" />
+        android:text="map" />
 
 </LinearLayout>

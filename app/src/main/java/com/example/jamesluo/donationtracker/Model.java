@@ -32,11 +32,26 @@ public class Model {
     //type: account type
     private static HashMap<String, String> auth = new HashMap<>();
     private static HashMap<String, Info> info = new HashMap<>();
+    private static HashMap<String, List<Item>> items = new HashMap<>();
     private static ArrayList<Location> locations = new ArrayList<>();
+    //private static ArrayList<Item> items = new ArrayList<>();
 
+    public static HashMap<String, Info> getInfo(){
+        return info;
+    }
     public static List<Location> getLocations(){
         return locations;
     }
+    public static void setItems(String s, Item it) {
+        if(items.containsKey(s)){
+            items.get(s).add(it);
+        }else{
+            items.put(s, new ArrayList<Item>());
+            items.get(s).add(it);
+        }
+    }
+    public static List<Item> getItems(String s) {if (items.containsKey(s)) return items.get(s); else return null; }
+
     public static void buildLocationCSV(InputStream ins) throws FileNotFoundException, IOException {
     //TODO init location array
         locations = new ArrayList<>();
@@ -47,12 +62,13 @@ public class Model {
         for (CSVRecord csvRecord: data) {
             Map<String,String> locationData = csvRecord.toMap();
             Log.d("-----------------", locationData.keySet().toString());
-            //----key set -> [Zip, Type, State, Phone, Street Address, Website, Latitude, ﻿Key, City, Longitude, Name]
+
             Location location = new Location(locationData, key);
             locations.add(key,location);
             key++;
         }
     }
+
 
     public static boolean verify(String u, String p){
         if (auth.containsKey(u) && auth.get(u).equals(p)){
@@ -65,14 +81,17 @@ public class Model {
         return auth.containsKey(u);
     }
     public static void addUser(String user, String pwd,String type, String id) {
-        auth.put(user,pwd);
-        info.put(user, new Info(user, type ,id));
+        //email as id
+        auth.put(id,pwd);
+        info.put(id, new Info(user, type ,id));
     }
 
 
 
 }
+
 class Info {
+
     public String name;
     public String type;
     public String id;
@@ -86,8 +105,14 @@ class Info {
 class Location {
     private Map<String, String> location;
 
-    private int key;
 
+    private int key;
+    public int getKey(){
+        return key;
+    }
+    public void setKey(int key){
+        this.key = key;
+    }
     public Location(Map<String, String> location , int key) {this.location = location;this.key = key;}
 
     public Map<String, String> getLocation() {
@@ -96,5 +121,19 @@ class Location {
 
     public void setLocation(Map<String, String> location) {
         this.location = location;
+    }
+}
+
+class Item {
+    private Map<String, String> item;
+
+    public Item(Map<String, String> location) {this.item = location;}
+
+    public Map<String, String> getItem() {
+        return item;
+    }
+
+    public void setItem(Map<String, String> location) {
+        this.item = location;
     }
 }

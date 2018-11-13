@@ -23,5 +23,9 @@
     <string name="title_activity_locationinfo">Location Details</string>
     <string name="back">back</string>
     <string name="logout">logout</string>
+    <string name="register">register</string>
+    <string name="add_item">add item</string>
+    <string name="search_items">Search Items</string>
+    <string name="title_activity_location_map">Map</string>
 
 </resources>
