@@ -51,7 +51,7 @@ public class ServerModel    {
             String website;
             String zip;
         }
-    private static class SingleItem{
+    public static class SingleItem{
         String ItemName;
         String FullDescription;
         String Category;
@@ -1001,10 +1001,14 @@ public class ServerModel    {
 
     public static ArrayList<SingleItem> itemBuilder(String raw){
         if (raw == null) {
-
+            throw new IllegalArgumentException("null json");
         }
+
         JSONArray jsonArray;
         final ArrayList<SingleItem> list = new ArrayList<>();
+        if (raw == "0") {
+            return list;
+        }
         String[] values = new String[1];
         if (raw.equals(null) || raw.equals("")) return list;
         try{
@@ -1022,9 +1026,14 @@ public class ServerModel    {
                 list.add(sl);
             }
             return list;
+        }catch (org.json.JSONException e) {
+
+            //e.printStackTrace();
+            return list;
         }catch (Exception e) {
-            e.printStackTrace();
+            return list;
+            //throw new IllegalArgumentException("illegal json");
         }
-        return null;
+
     }
 }
