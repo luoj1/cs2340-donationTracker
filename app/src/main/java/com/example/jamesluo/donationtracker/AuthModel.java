@@ -25,7 +25,14 @@ public class AuthModel {
     public static FirebaseAuth getAuth(){
         return mAuth;
     }
-
+    /**
+     * create a new user
+     * @param from input context
+     * @param success2 input success
+     * @param fail2 input fail
+     * @param email input email
+     * @param password input password
+     */
     public static void signIn(final Context from, final Class success2, final Class fail2,String email, String password) {
         final String TAG = "sign in activity";
         Log.d(TAG, "input email:"+email);
@@ -94,3 +101,6 @@ public class AuthModel {
     }
 
 }
+
+
+

@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 public class GetItemsTest {
-    private static HashMap<String, List<Item>> testItems = Model.getItems();
+    private static Map<String, List<Item>> testItems = Model.getItems();
     private String location1 = "Atlanta";
     private String location2 = "Golden State";
     private Map<String, String> l1 = new HashMap<>();

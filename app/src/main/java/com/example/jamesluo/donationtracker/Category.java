@@ -1,5 +1,5 @@
 package com.example.jamesluo.donationtracker;
-/* get enum class for item category
+/** get enum class for item category
  */
 public enum Category {
     Clothing("Clothing"),
@@ -12,14 +12,16 @@ public enum Category {
     Category(String letter) {
         value = letter;
     }
-    /* set value for the category
-
+    /** set value for the category
+     * @param value the input value
      */
     public void setValue(String value) {
         this.value = value;
     }
-    /* get the value of the category
 
+    /**
+     * get the value of the category
+     * @return string value
      */
     public String getValue() {
         return value;
