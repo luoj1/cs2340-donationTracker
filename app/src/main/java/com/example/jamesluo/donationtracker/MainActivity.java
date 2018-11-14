@@ -1,18 +1,18 @@
 package com.example.jamesluo.donationtracker;
 
-import android.content.res.AssetManager;
+//import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.Spinner;
 
-import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.InputStream;
-import java.util.ArrayList;
+//import java.io.InputStream;
+//import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
