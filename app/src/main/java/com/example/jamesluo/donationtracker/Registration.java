@@ -322,7 +322,9 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
 
         mEmailView.setAdapter(adapter);
     }
+    /* function for the cancel bottom pressed.
 
+     */
     public void onCancelPressed(View view) {
         Log.d("Edit", "Cancel Registration");
         finish();

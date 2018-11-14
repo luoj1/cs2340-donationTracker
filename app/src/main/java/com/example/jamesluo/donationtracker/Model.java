@@ -36,12 +36,19 @@ public class Model {
     private static ArrayList<Location> locations = new ArrayList<>();
     //private static ArrayList<Item> items = new ArrayList<>();
 
+    /* getter method for info
+
+     */
     public static HashMap<String, Info> getInfo(){
         return info;
     }
     public static List<Location> getLocations(){
         return locations;
     }
+    /* setter method for items
+     * @param s target location
+     * @param it target item
+     */
     public static void setItems(String s, Item it) {
         if(items.containsKey(s)){
             items.get(s).add(it);
@@ -50,8 +57,15 @@ public class Model {
             items.get(s).add(it);
         }
     }
-    public static List<Item> getItems(String s) {if (items.containsKey(s)) return items.get(s); else return null; }
 
+    /* getter method for item
+     * @param s target location
+     * @return item list in the target location
+     */
+    public static List<Item> getItems(String s) {if (items.containsKey(s)) return items.get(s); else return null; }
+    /*
+
+     */
     public static void buildLocationCSV(InputStream ins) throws FileNotFoundException, IOException {
     //TODO init location array
         locations = new ArrayList<>();

@@ -24,7 +24,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+/* implementation for the locations page
 
+ */
 public class Locations extends Activity {
     private class SingleLocation{
         String name;
