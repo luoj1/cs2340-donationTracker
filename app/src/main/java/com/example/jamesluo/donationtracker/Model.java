@@ -1,27 +1,20 @@
 package com.example.jamesluo.donationtracker;
 
 
-import android.app.Application;
-import android.content.res.AssetManager;
-import android.os.Environment;
 import android.util.Log;
 
-import java.io.BufferedReader;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.apache.commons.csv.*;
-import java.io.File;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.csv.CSVParser;
-import com.opencsv.*;
 /**
  * Created by jamesluo on 9/20/18.
  */
@@ -42,7 +35,8 @@ public class Model {
     public static List<Location> getLocations(){
         return locations;
     }
-    public static void setItems(String s, Item it) {
+    public static HashMap<String, List<Item>> getItems() {return items;}
+    public static void setItems(String s, Item it, HashMap<String, List<Item>> items) {
         if(items.containsKey(s)){
             items.get(s).add(it);
         }else{
