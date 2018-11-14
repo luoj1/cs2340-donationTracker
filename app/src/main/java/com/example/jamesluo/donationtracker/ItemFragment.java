@@ -11,15 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 /**
  * Created by jamesluo on 10/31/18.
  */
 
 public class ItemFragment extends Fragment {
 
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("con createview","1");

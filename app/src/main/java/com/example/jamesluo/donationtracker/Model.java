@@ -1,14 +1,9 @@
 package com.example.jamesluo.donationtracker;
 
 
-import android.app.Application;
-import android.content.res.AssetManager;
-import android.os.Environment;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,12 +11,10 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.apache.commons.csv.*;
-import java.io.File;
+
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.csv.CSVParser;
-import com.opencsv.*;
 /**
  * Created by jamesluo on 9/20/18.
  */
@@ -30,18 +23,50 @@ public class Model {
     //id: email
     //name: username
     //type: account type
-    private static HashMap<String, String> auth = new HashMap<>();
-    private static HashMap<String, Info> info = new HashMap<>();
-    private static HashMap<String, List<Item>> items = new HashMap<>();
-    private static ArrayList<Location> locations = new ArrayList<>();
+    private static Map<String, String> auth = new HashMap<>();
+    private static Map<String, Info> info = new HashMap<>();
+    private static Map<String, List<Item>> items = new HashMap<>();
+    private static List<Location> locations = new ArrayList<>();
     //private static ArrayList<Item> items = new ArrayList<>();
 
-    public static HashMap<String, Info> getInfo(){
+    /**
+     * getter method for info
+     * @return map information
+     */
+    public static Map<String, String> getAuth(){
+        return auth;
+    }
+
+    /**
+     * getter method for info
+     * @return map information
+     */
+    public static Map<String, List<Item>> getItems(){
+        return items;
+    }
+    /**
+     * getter method for info
+     * @return map information
+     */
+    public static Map<String, Info> getInfo(){
         return info;
     }
+
+    /**
+     * getter method for locations
+     * @return list of locations
+     */
     public static List<Location> getLocations(){
         return locations;
     }
+
+
+    /**
+     * setter method for items
+     * @param s target location
+     * @param it target item
+     */
+
 
     public static void setItems(String s, Item it) {
         if(items.containsKey(s)){
@@ -51,8 +76,19 @@ public class Model {
             items.get(s).add(it);
         }
     }
-    public static List<Item> getItems(String s) {if (items.containsKey(s)) return items.get(s); else return null; }
 
+    /**
+     * getter method for item
+     * @param s target location
+     * @return item list in the target location
+     */
+    public static List<Item> getItems(String s) {if (items.containsKey(s)) return items.get(s); else return null; }
+    /**
+     * build location csv
+     * @param ins input array
+     * @throws FileNotFoundException the file is not found
+     * @throws IOException input list instead of array
+     */
     public static void buildLocationCSV(InputStream ins) throws FileNotFoundException, IOException {
     //TODO init location array
         locations = new ArrayList<>();
@@ -70,17 +106,36 @@ public class Model {
         }
     }
 
-
+    /**
+     * verify if our database has the input information
+     * @param u input username
+     * @param p input password
+     * @return Yes/No if the input information exist and match
+     */
     public static boolean verify(String u, String p){
-        if (auth.containsKey(u) && auth.get(u).equals(p)){
-            return true;
-        }else {
-            return false;
-        }
+        return auth.containsKey(u) && auth.get(u).equals(p);
     }
+
+    /**
+     * check if the database has the input username
+     * @param u input username
+     * @return Yes/No if the input information exist and match
+     */
     public static boolean contains(String u) {
         return auth.containsKey(u);
     }
+
+
+
+
+    /**
+     * add user to database
+     * @param user input username
+     * @param pwd  input password
+     * @param type input user type
+     * @param id input ID number
+     */
+
 
     public static void addUser(String user, String pwd,String type, String id) {
         //email as id
@@ -94,9 +149,9 @@ public class Model {
 
 class Info {
 
-    public String name;
-    public String type;
-    public String id;
+    private String name;
+    private String type;
+    private String id;
     public Info (String name, String type, String id) {
         this.name = name;
         this.type = type;

@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import java.util.List;
 
 /**
  * Created by jamesluo on 10/25/18.
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -51,6 +53,7 @@ public class ServerModel    {
             String website;
             String zip;
         }
+
     public static class SingleItem{
         String ItemName;
         String FullDescription;
@@ -59,13 +62,15 @@ public class ServerModel    {
         String TimeStamp;
         String Location;
     }
+
    private final static String url = "http://162.243.172.39:8080";
    private static OkHttpClient client;
    public static void initClient() {
        client = new OkHttpClient.Builder().retryOnConnectionFailure(true).build();
    }
+
     public static void createNewUserInDB(final Context from, final Class success2,
-            final Class fail2, String email, String name, String type, String uid){
+                                         final Class fail2, String email, String name, String type, String uid){
         Log.d("serverModel", name);
 
         RequestBody body = new FormBody.Builder()
@@ -173,8 +178,9 @@ public class ServerModel    {
 
                 }
             }
-            });
+        });
     }
+
 
     public static void getLocationForMap(final Context from, final GoogleMap gm /*,final Class success, final Class fail,*/){
         Log.d("serverModelfor map","xx");
@@ -518,7 +524,9 @@ public class ServerModel    {
             }
         });
     }
-    private static RequestBody resquestBuilder(final String username, final String pw, final String category, final String location){
+
+    public static RequestBody requestBuilder(final String username, final String pw, final String category, final String location){
+
         if (username == null || pw == null || category == null || location == null) {
             throw new IllegalArgumentException("null input");
         }
@@ -536,7 +544,9 @@ public class ServerModel    {
 
     public static void searchItemsByCategoryLoc(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final  String category, final String location,
                                                 final String type, final String longitude, final String latitude, final String phone, final String address) {
-        RequestBody body = resquestBuilder(username, pw, category, location);
+
+        RequestBody body = requestBuilder(username, pw, category, location);
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url+"/searchItemByCategoryLoc")
@@ -570,7 +580,7 @@ public class ServerModel    {
                             Log.d("s cat loc","no cat");
                             Toast.makeText(from, "no matched category", Toast.LENGTH_LONG).show();
                             getItems(from,ItemInfo,searchResult, username, pw, location,
-                            type, longitude, latitude, phone,  address);
+                                    type, longitude, latitude, phone,  address);
 
                         }
                     });
@@ -881,13 +891,13 @@ public class ServerModel    {
     }
 
     public static void addItems(final Context from, final Class success, final Class fail
-                                , final String category
-                                , final String name
-                                , final String full
-                                , final String timestamp
-                                , final String value
-                                ,final String location
-                                ,final String username, final String pw) {
+            , final String category
+            , final String name
+            , final String full
+            , final String timestamp
+            , final String value
+            ,final String location
+            ,final String username, final String pw) {
         RequestBody body = new FormBody.Builder()
                 //.add("username", username)
                 //.add("pw", pw)
@@ -979,10 +989,10 @@ public class ServerModel    {
 
                     Log.d("success",myResponse);
 
-                        if (myResponse.equals("Location Employee")){
-                            b.setVisibility(View.VISIBLE);
-                            Log.d("setbutton",myResponse);
-                        }
+                    if (myResponse.equals("Location Employee")){
+                        b.setVisibility(View.VISIBLE);
+                        Log.d("setbutton",myResponse);
+                    }
                     Log.d("no setbutton",myResponse);
                     /*Intent intent = new Intent(from,success);
                     intent.putExtra("locations",myResponse);
