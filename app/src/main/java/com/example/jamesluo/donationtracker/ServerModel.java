@@ -850,7 +850,7 @@ public class ServerModel    {
         });
 
     }
-    public static ArrayList<SingleItem> itemBuilder(String raw){
+    private static ArrayList<SingleItem> itemBuilder(String raw){
         JSONArray jsonArray;
         final ArrayList<SingleItem> list = new ArrayList<>();
         String[] values = new String[1];

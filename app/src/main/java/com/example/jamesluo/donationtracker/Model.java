@@ -71,11 +71,7 @@ public class Model {
 
 
     public static boolean verify(String u, String p){
-        if (auth.containsKey(u) && auth.get(u).equals(p)){
-            return true;
-        }else {
-            return false;
-        }
+        return auth.containsKey(u) && auth.get(u).equals(p);
     }
     public static boolean contains(String u) {
         return auth.containsKey(u);
