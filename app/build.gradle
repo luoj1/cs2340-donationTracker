@@ -32,7 +32,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
 
     testImplementation 'junit:junit:4.12'
+<<<<<<< HEAD
     testImplementation 'org.json:json:20140107'
+=======
+    testCompile 'org.json:json:20140107'
+>>>>>>> dc0a01708aae85f097f1ad350c8a632f4bbbf667
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api "org.apache.commons:commons-csv:1.5"

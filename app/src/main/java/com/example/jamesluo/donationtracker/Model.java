@@ -59,11 +59,13 @@ public class Model {
     public static List<Location> getLocations(){
         return locations;
     }
+
     /**
      * setter method for items
      * @param s target location
      * @param it target item
      */
+
     public static void setItems(String s, Item it) {
         if(items.containsKey(s)){
             items.get(s).add(it);
@@ -121,6 +123,7 @@ public class Model {
         return auth.containsKey(u);
     }
 
+
     /**
      * add user to database
      * @param user input username
@@ -128,6 +131,7 @@ public class Model {
      * @param type input user type
      * @param id input ID number
      */
+
     public static void addUser(String user, String pwd,String type, String id) {
         //email as id
         auth.put(id,pwd);
