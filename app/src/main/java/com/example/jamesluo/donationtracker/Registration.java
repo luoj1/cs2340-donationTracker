@@ -108,7 +108,7 @@ public class Registration extends AppCompatActivity implements LoaderCallbacks<C
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Registration.legalUsers);
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Registration.legalUsers);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mTypeSpinner.setAdapter(adapter);
 

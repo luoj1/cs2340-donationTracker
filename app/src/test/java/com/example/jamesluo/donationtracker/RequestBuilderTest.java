@@ -1,20 +1,20 @@
 package com.example.jamesluo.donationtracker;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.junit.Before;
+//import org.json.JSONArray;
+//import org.json.JSONObject;
+//import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 import org.junit.Rule;
-import org.junit.Test;
+//import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
 import okhttp3.FormBody;
-import okhttp3.Request;
+//import okhttp3.Request;
 import okhttp3.RequestBody;
 
 /**
@@ -34,9 +34,6 @@ public class RequestBuilderTest {
         String password = null;
         String category = null;
         String location = null;
-        thrown.expect(IllegalArgumentException.class);
-        ServerModel.requestBuilder(username,password,category,location);
-
         String username1 = "Joey";
         String password1 = "fail(test";
         String password2 = "fail)test";
@@ -45,6 +42,19 @@ public class RequestBuilderTest {
         String password5 = "successTest";
         String category1 = "test";
         String location1 = "georgiaTech";
+
+        thrown.expect(IllegalArgumentException.class);
+        ServerModel.requestBuilder(username,password,category,location);
+        thrown.expect(IllegalArgumentException.class);
+        ServerModel.requestBuilder(username,password1,category1,location1);
+        thrown.expect(IllegalArgumentException.class);
+        ServerModel.requestBuilder(username1,password,category1,location1);
+        thrown.expect(IllegalArgumentException.class);
+        ServerModel.requestBuilder(username1,password1,category,location1);
+        thrown.expect(IllegalArgumentException.class);
+        ServerModel.requestBuilder(username1,password1,category1,location);
+
+
         thrown.expect(IllegalArgumentException.class);
         ServerModel.requestBuilder(username1,password1,category1,location1);
         thrown.expect(IllegalArgumentException.class);
@@ -61,6 +71,12 @@ public class RequestBuilderTest {
                 .add("location", location1)
                 .build();
 
-        assertTrue(body.toString() == ServerModel.requestBuilder("Joey", "successTest", "test", "georgiaTech"));
+        assertTrue(body.toString().equals(ServerModel.requestBuilder("Joey", "successTest", "test", "georgiaTech")));
+        assertFalse(body.toString().equals(ServerModel.requestBuilder("Joey1", "successTest", "test", "georgiaTech")));
+        assertFalse(body.toString().equals(ServerModel.requestBuilder("Joey", "successTest1", "test", "georgiaTech")));
+        assertFalse(body.toString().equals(ServerModel.requestBuilder("Joey", "successTest", "test1", "georgiaTech")));
+        assertFalse(body.toString().equals(ServerModel.requestBuilder("Joey", "successTest", "test", "georgiaTech1")));
+
+
     }
 }

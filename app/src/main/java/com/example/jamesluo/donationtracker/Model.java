@@ -10,7 +10,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.apache.commons.csv.*;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 
 import java.util.List;
 import java.util.Map;
@@ -60,11 +61,13 @@ public class Model {
         return locations;
     }
 
+
     /**
      * setter method for items
      * @param s target location
      * @param it target item
      */
+
 
     public static void setItems(String s, Item it) {
         if(items.containsKey(s)){
@@ -124,6 +127,8 @@ public class Model {
     }
 
 
+
+
     /**
      * add user to database
      * @param user input username
@@ -131,6 +136,7 @@ public class Model {
      * @param type input user type
      * @param id input ID number
      */
+
 
     public static void addUser(String user, String pwd,String type, String id) {
         //email as id

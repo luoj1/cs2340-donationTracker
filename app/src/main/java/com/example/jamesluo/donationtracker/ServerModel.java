@@ -1,10 +1,10 @@
 package com.example.jamesluo.donationtracker;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
+//import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+//import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.util.List;
+//import java.util.List;
 
 /**
  * Created by jamesluo on 10/25/18.
@@ -22,20 +22,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.JsonObject;
+//import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
-import org.json.JSONException;
+//import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
+//import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -181,116 +181,7 @@ public class ServerModel    {
         });
     }
 
-   /* public static void getLocationForMap(final Context from, final GoogleMap gm){
-        Log.d("serverModelfor map","xx");
 
-        RequestBody body = new FormBody.Builder()
-                .add("username","x")
-                .add("pw", "x")
-                .build();
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url+"/getLocation")
-                //.addHeader("Accept", "application/json")
-                .header("Connection","close")
-                .post(body)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                call.cancel();
-                e.printStackTrace();
-                Log.d("fail get location map",e.getMessage());
-
-                Toast.makeText(from, "fail in creating map", Toast.LENGTH_LONG).show();
-                //Toast.makeText(from, "db issue", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                //call.cancel();
-                final String myResponse = response.body().string();
-                Log.d("getlocation response", myResponse);
-                if (myResponse .equals("0")){
-                    call.cancel();
-                    Log.d("success map",myResponse);
-
-                    Toast.makeText(from, "success in creating map 0", Toast.LENGTH_LONG).show();
-
-                }else{
-                    try{
-
-                        Log.d("success map with sth.",myResponse);
-
-
-                        JSONArray jsonArray;
-                        final ArrayList<SingleLocation> list = new ArrayList<>();
-                        String[] values = new String[1];
-                        try{
-                            jsonArray = new JSONArray(myResponse);
-                            values  = new String[jsonArray.length()];
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject jsonobject = jsonArray.getJSONObject(i);
-                                SingleLocation sl = new SingleLocation();
-                                String name = jsonobject.getString("name");
-                                sl.name = name;
-                                sl.latitude = jsonobject.getString("latitude");
-                                sl.longitude = jsonobject.getString("longitude");
-                                sl.street_addr = jsonobject.getString("street_addr");
-                                sl.city = jsonobject.getString("city");
-                                sl.state = jsonobject.getString("state");
-                                sl.type = jsonobject.getString("type");
-                                sl.phone = jsonobject.getString("phone");
-                                sl.website = jsonobject.getString("website");
-                                sl.zip = jsonobject.getString("zip");
-                                values[i] = name;
-                                list.add(sl);
-                            }
-                            ((Activity)from).runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    //Toast.makeText(from, "empty", Toast.LENGTH_LONG).show();
-                                    //LatLng place = new LatLng(-84.38 , 33);
-                                    //gm.addMarker(new MarkerOptions().position(place).title("Marker in Sydney"));
-                                    for (SingleLocation s : list) {
-                                        LatLng loc = new LatLng(Double.parseDouble(s.latitude) ,Double.parseDouble(s.longitude));
-
-                                        gm.addMarker(new MarkerOptions().position(loc).title(s.name + "\ncall: "+s.phone));
-                                        gm.moveCamera(CameraUpdateFactory.newLatLng(loc));
-
-
-                                    }
-                                    gm.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-
-                                        @Override
-                                        public boolean onMarkerClick(Marker arg0) {
-
-                                            Toast.makeText(from,arg0.getTitle(),Toast.LENGTH_LONG).show();
-
-                                            return true;
-
-                                        }
-                                    });
-
-                                }
-                            });
-
-                        }catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-
-
-                }
-            }
-        });
-    }
-*/
     public static void getLocationForMap(final Context from, final GoogleMap gm /*,final Class success, final Class fail,*/){
         Log.d("serverModelfor map","xx");
 
@@ -633,7 +524,9 @@ public class ServerModel    {
             }
         });
     }
+
     public static RequestBody requestBuilder(final String username, final String pw, final String category, final String location){
+
         if (username == null || pw == null || category == null || location == null) {
             throw new IllegalArgumentException("null input");
         }
@@ -651,7 +544,9 @@ public class ServerModel    {
 
     public static void searchItemsByCategoryLoc(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final  String category, final String location,
                                                 final String type, final String longitude, final String latitude, final String phone, final String address) {
+
         RequestBody body = requestBuilder(username, pw, category, location);
+
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url+"/searchItemByCategoryLoc")

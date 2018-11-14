@@ -18,7 +18,7 @@ import java.util.Map;
  */
 
 public class AddItem extends Activity {
-
+    @SuppressWarnings("warning")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +29,7 @@ public class AddItem extends Activity {
         final EditText value = (EditText) findViewById(R.id.value);
         final String locationOfDonation = getIntent().getStringExtra("Location of Donation");
         final Spinner category = (Spinner) findViewById(R.id.categoryOfItem);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Category.values());
+        ArrayAdapter adapter = new ArrayAdapter(this,(Integer)android.R.layout.simple_spinner_item, Category.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         category.setAdapter(adapter);
         Button submit = (Button) findViewById(R.id.add_item_successful);

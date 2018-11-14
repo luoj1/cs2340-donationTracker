@@ -29,14 +29,14 @@ public class LocationInfo extends Activity {
         String TimeStamp;
         String Location;
     }
-    public static String location;
+    private static String location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_info);
 
 
-        final TextView location_name = (TextView) findViewById(R.id.location_name);
+        final TextView location_name = findViewById(R.id.location_name);
         final TextView location_type = (TextView) findViewById(R.id.location_type);
         final TextView longitude = (TextView) findViewById(R.id.longitude);
         final TextView latitude = (TextView) findViewById(R.id.latitude);
@@ -144,7 +144,7 @@ public class LocationInfo extends Activity {
         });
 
         final Spinner categoryOfItem = (Spinner) findViewById(R.id.searchCategory);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Category.values());
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Category.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryOfItem.setAdapter(adapter);
         Button searchByCategory = (Button) findViewById(R.id.searchByCategory);

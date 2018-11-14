@@ -16,7 +16,7 @@ import android.widget.TextView;
  */
 
 public class ItemFragment extends Fragment {
-
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("con createview","1");

@@ -1,12 +1,12 @@
 package com.example.jamesluo.donationtracker;
 
 import android.app.Activity;
-import android.app.ListActivity;
+//import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
+//import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,7 +38,7 @@ public class Locations extends Activity {
         String website;
         String zip;
     }
-
+    @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_location);
@@ -126,7 +126,7 @@ public class Locations extends Activity {
             }
         });
         final Spinner categoryOfItem = (Spinner) findViewById(R.id.searchCategory);
-        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Category.values());
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item, Category.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoryOfItem.setAdapter(adapter);
         Button searchByCategory = (Button) findViewById(R.id.searchByCategory);
