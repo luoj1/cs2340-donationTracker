@@ -631,7 +631,7 @@ public class ServerModel    {
             }
         });
     }
-    private static RequestBody resquestBuilder(final String username, final String pw, final String category, final String location){
+    public static RequestBody requestBuilder(final String username, final String pw, final String category, final String location){
         if (username == null || pw == null || category == null || location == null) {
             throw new IllegalArgumentException("null input");
         }
@@ -649,7 +649,7 @@ public class ServerModel    {
 
     public static void searchItemsByCategoryLoc(final Context from, final Class ItemInfo, final ListView searchResult, final String username, final String pw, final  String category, final String location,
                                                 final String type, final String longitude, final String latitude, final String phone, final String address) {
-        RequestBody body = resquestBuilder(username, pw, category, location);
+        RequestBody body = requestBuilder(username, pw, category, location);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url+"/searchItemByCategoryLoc")

@@ -13,6 +13,7 @@ import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
+import okhttp3.FormBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
