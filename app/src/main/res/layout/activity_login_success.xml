@@ -10,13 +10,19 @@
 
     <Button
         android:id="@+id/location"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:paddingTop="15dp"
         android:text="location" />
     <Button
+        android:id="@+id/add_photo"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:paddingTop="15dp"
+        android:text="add user photo" />
+    <Button
         android:id="@+id/logout"
-        android:layout_width="100dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:paddingTop="15dp"
         android:text="@string/logout" />

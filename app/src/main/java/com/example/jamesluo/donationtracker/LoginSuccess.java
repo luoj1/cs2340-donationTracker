@@ -2,11 +2,13 @@ package com.example.jamesluo.donationtracker;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +16,6 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LoginSuccess extends AppCompatActivity {
 
@@ -30,6 +31,16 @@ public class LoginSuccess extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(LoginSuccess.this, MainActivity.class);
                 startActivity(i);
+            }
+        });
+        Button addphoto = (Button) findViewById(R.id.add_photo);
+        addphoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                final int ACTIVITY_SELECT_IMAGE = 1234;
+                startActivityForResult(i, ACTIVITY_SELECT_IMAGE);
             }
         });
         ArrayList<Location> location = null;
@@ -54,6 +65,23 @@ public class LoginSuccess extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case 1234:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = data.getData();
+                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    String filePath = cursor.getString(columnIndex);
+                    cursor.close();
+                    Bitmap yourSelectedImage = BitmapFactory.decodeFile(filePath);
+                }
+        }
+
     }
     @Override
     public void onBackPressed() {

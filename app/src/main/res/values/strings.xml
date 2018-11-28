@@ -27,5 +27,7 @@
     <string name="add_item">add item</string>
     <string name="search_items">Search Items</string>
     <string name="title_activity_location_map">Map</string>
+    <string name="user_photo" />
+    <string name="add_user_photo">add user photo</string>
 
 </resources>
